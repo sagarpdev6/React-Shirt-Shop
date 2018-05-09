@@ -11,6 +11,11 @@ h2 {
   font-weight: 900 !important;
 }
 
+p {
+  font-size: 18px;
+  font-weight: 400;
+}
+
 label {
   font-size: 12px;
   font-weight: 800;

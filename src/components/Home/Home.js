@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import Shipping from '../Shipping/Shipping';
 
 const background = require('../../images/Fractal.png');
 const logoVertical = require('../../images/Shirtastic-vertical.svg');
@@ -35,15 +36,16 @@ class Home extends Component {
                 <img src={background} alt="background" />
             </div>
             <Row>
-                <div className="side-column">
+                {this.state.activeTab === '1' ? <div className="side-column" >
                     {/* Login Component Goes Here */}
                     <Login />
-                </div>
+                </div> : null}
+
                 <div className="center-column">
                     <img className="vertical-logo" src={logoVertical} alt="vertical logo" />
                     <div className="copyright text-center">© 2018 DEV6 – A division of The New Toronto Group Inc.</div>
                 </div>
-                <div className="side-column">
+                <div className={"side-column " + (this.state.activeTab === '2' ? 'shipping-col' : '')}>
                     {this.state.activeTab === '1' ? <h2 className="text-center">Sign up</h2> : null}
                     <Nav tabs>
                         <NavItem>
@@ -62,12 +64,12 @@ class Home extends Component {
                         </TabPane>
                         <TabPane tabId="2">
                             {/* Shipping Component Goes Here */}
-                            Shipping Component goes here
-                    </TabPane>
+                            <Shipping />
+                        </TabPane>
                     </TabContent>
                 </div>
             </Row>
-        </div>);
+        </div >);
     }
 }
 export default Home;

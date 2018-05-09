@@ -35,13 +35,13 @@ class Shipping extends Component {
                 <h2>Awesome!</h2>
                 <p>{contactIntro}</p>
                 <form>
-                    <Row>
+                    <Row className="row-item">
                         <Col className="form-group">
                             <label htmlFor="name">Name</label>
                             <input type="text" className="form-control form-control-sm" />
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="row-item">
                         <Col className="form-group">
                             <label htmlFor="address1">Address 1</label>
                             <input type="text" className="form-control form-control-sm" />
@@ -51,7 +51,7 @@ class Shipping extends Component {
                             <input type="text" className="form-control form-control-sm" />
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="row-item">
                         <Col className="form-group">
                             <label htmlFor="phone">Phone Number</label>
                             <input type="text" className="form-control form-control-sm" />
@@ -61,7 +61,7 @@ class Shipping extends Component {
                             <input type="text" className="form-control form-control-sm" />
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="row-item">
                         <Col className="form-group" xs="6">
                             <label htmlFor="country">Country</label>
                             <br />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 
-import { Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
+import { Container, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 
 import Login from '../Login/Login';
@@ -31,7 +31,7 @@ class Home extends Component {
     }
 
     render() {
-        return (<div>
+        return (<Container fluid>
             <div className="img-container">
                 <img src={background} alt="background" />
             </div>
@@ -69,7 +69,7 @@ class Home extends Component {
                     </TabContent>
                 </div>
             </Row>
-        </div >);
+        </Container >);
     }
 }
 export default Home;

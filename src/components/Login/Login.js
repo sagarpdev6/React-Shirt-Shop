@@ -12,10 +12,10 @@ class Login extends Component {
                     <h2>Log in</h2>
                     <br />
                     <button className="primary-btn">
-                        <img className="facebook-icon" src={facebookIcon} />WITH FACEBOOK
+                        <img className="facebook-icon" src={facebookIcon} alt="facebook icon" />WITH FACEBOOK
                     </button>
                     <button className="primary-btn">
-                        <img className="twitter-icon" src={twitterIcon} />WITH TWITTER
+                        <img className="twitter-icon" src={twitterIcon} alt="twitter icon" />WITH TWITTER
                     </button>
                 </div>
                 <br />

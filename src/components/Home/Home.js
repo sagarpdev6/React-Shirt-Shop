@@ -3,6 +3,8 @@ import './Home.css';
 
 import { Row } from 'reactstrap';
 
+import Login from '../Login/Login';
+
 const background = require('../../images/Fractal.png');
 const logoVertical = require('../../images/Shirtastic-vertical.svg');
 
@@ -15,7 +17,8 @@ class Home extends Component {
             </div>
             <Row>
                 <div className="side-column">
-                    {/* Login Component Here */}
+                    {/* Login Component Goes Here */}
+                    <Login />
                 </div>
                 <div className="center-column">
                     <img className="vertical-logo" src={logoVertical} />

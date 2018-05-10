@@ -9,7 +9,7 @@
     margin:-5px;
 }
 
-.row {
+.row-full-height {
     /* Makes the row to expand the entire viewport height */
     height: 100vh;
 }
@@ -61,6 +61,9 @@
 }
 
 /* For home bootstrap tabs */
+.home-tabs {
+    justify-content: center;
+}
 .home-tabs li .nav-link{
     opacity: 0.5;
     font-size: 16px;

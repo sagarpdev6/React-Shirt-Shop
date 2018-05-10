@@ -1,5 +1,10 @@
-.container-fluid {
+.fluid-container {
+    padding-top: 15px;
     background-color: #EEEEEE;
+}
+
+nav {
+    box-shadow: 0 5px 6px -6px #777;
 }
 
 .mr-2{
@@ -21,4 +26,10 @@
     color: #274686 !important;
     border-bottom: 2px solid #274686 !important;
     background-color: transparent !important;
+}
+
+@media only screen and (min-width: 500px) {
+    .fluid-container {
+        padding-left: 100px !important;
+    }
 }

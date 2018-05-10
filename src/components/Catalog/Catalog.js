@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Catalog.css';
 import classnames from 'classnames';
-import { Container, Row, Navbar, NavbarToggler, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
+import { Container, Row, Col, Navbar, NavbarToggler, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 
 import Shirt from '../Shirt/Shirt';
 import { shirtList } from '../Models/ShirtListModel';
@@ -29,7 +29,19 @@ class Catalog extends Component {
         return (
             <div>
                 <Navbar color="faded" light>
-                    <NavbarToggler className="mr-2" />
+                    <Row className="nav-toggle-btn">
+                        <NavbarToggler className="mr-2" />
+                        <div className="vr"></div>
+                    </Row>
+                    <Row className="cart-container">
+                        <button className="primary-btn nav-btn">NEW DESIGN</button>
+                        <div className="vr"></div>
+
+                        <Row className="cart-btn">
+                            <div className="nav-icon-basket"></div>
+                            <div className="cart-count">3</div>
+                        </Row>
+                    </Row>
                 </Navbar>
                 <Container fluid className="fluid-container">
                     <Nav tabs className="catalog-tabs">

@@ -35,7 +35,7 @@ class Home extends Component {
             <div className="img-container">
                 <img src={background} alt="background" />
             </div>
-            <Row>
+            <Row className="row-full-height">
                 {this.state.activeTab === '1' ? <div className="side-column" >
                     {/* Login Component Goes Here */}
                     <Login />

@@ -6,7 +6,7 @@ const termsOfUse = 'By clicking the Sign Up button below, you agree to our Terms
 class Signup extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="signup-container">
                 <form>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>

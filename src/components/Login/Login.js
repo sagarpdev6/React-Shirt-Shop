@@ -7,7 +7,7 @@ const twitterIcon = require('../../images/twitter.svg');
 class Login extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="login-container">
                 <div className="text-center">
                     <h2>Log in</h2>
                     <br />

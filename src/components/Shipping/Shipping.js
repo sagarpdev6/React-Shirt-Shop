@@ -64,7 +64,7 @@ class Shipping extends Component {
                         </Col>
                     </Row>
                     <Row className="row-item">
-                        <Col className="form-group" xs="6">
+                        <Col className="form-group shipping-col" xs="6">
                             <label htmlFor="country">Country</label>
                             <br />
                             <select className="form-control form-control-sm" value={this.state[this.id]} onChange={this.updateShippingInfo} id="country">
@@ -76,7 +76,7 @@ class Shipping extends Component {
                                 ))}
                             </select>
                         </Col>
-                        <Col className="form-group" xs="3">
+                        <Col className="form-group shipping-col" xs="3">
                             <label htmlFor="province">Province</label>
                             <br />
                             <select className="form-control form-control-sm" value={this.state[this.id]} onChange={this.updateShippingInfo} id="region">
@@ -90,7 +90,7 @@ class Shipping extends Component {
                                     : null}
                             </select>
                         </Col>
-                        <Col className="form-group" xs="3">
+                        <Col className="form-group shipping-col" xs="3">
                             <label htmlFor="zip">Postal Code</label>
                             <input type="text" className="form-control form-control-sm" />
                         </Col>

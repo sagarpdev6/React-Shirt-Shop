@@ -47,7 +47,7 @@ class Home extends Component {
                 </div>
                 <div className={"side-column " + (this.state.activeTab === '2' ? 'shipping-col' : '')}>
                     {this.state.activeTab === '1' ? <h2 className="text-center">Sign up</h2> : null}
-                    <Nav tabs>
+                    <Nav tabs className="home-tabs">
                         <NavItem>
                             <NavLink className={classnames({ active: this.state.activeTab === '1' })}
                                 onClick={() => { this.toggle('1'); }}>Step 1</NavLink>

@@ -61,7 +61,7 @@
 }
 
 /* For home bootstrap tabs */
-.nav-tabs li .nav-link{
+.home-tabs li .nav-link{
     opacity: 0.5;
     font-size: 16px;
     font-weight: bold;
@@ -71,7 +71,7 @@
     cursor: pointer;
 }
 
-.nav-tabs li .nav-link.active {
+.home-tabs li .nav-link.active {
     opacity: 1;
     border-bottom: 2px solid #FFFFFF !important;
     background-color: transparent !important;

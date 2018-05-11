@@ -48,7 +48,7 @@ nav {
     margin-right: 20px;
 }
 
-.cart-container {
+.cart-btn-container {
     margin: 0 !important;
     align-items: center;
 }
@@ -71,11 +71,55 @@ nav {
     height: 30px;
     border-radius: 15px;
     text-align: center;
-    padding: 5% 0;
+    padding: 5px 0;
     font-size: 14px;
 }
 
 .nav-btn {
     margin-right: 20px;
     margin-top: 5px;
+}
+
+/* Side nav Cart */
+.sidenav-cart, .sidenav-shipping, .sidenav-payment {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0;
+    background-color: #F0F0F0; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.2s; /* 0.5 second transition effect to slide in the sidenav */
+    border-right: 0.5px solid #CDCDCD;
+}
+
+div.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #CCC;
+}
+
+
+.sidenav-shipping div .shipping-title {
+    color: #274686;
+    font-size: 26px;
+    font-weight: 800;
+    margin-top: -5px;
+    padding-top: 0;
+    margin-bottom: 0;
+}
+
+.overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
 }

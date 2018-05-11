@@ -1,0 +1,42 @@
+.cart-container {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.cart-header {
+    padding-top: 20px;
+}
+
+.cart-header .cart-btn {
+    margin-top: 5px !important;
+    margin-right: -5px !important;
+}
+
+.cart-btn-row {
+    height: 30px;
+}
+
+.cart-title {
+    color: #274686;
+    font-size: 26px;
+    font-weight: 800;
+    margin-right: 35px;
+}
+
+.cart-container .primary-btn {
+    float: right;
+}
+
+.cart-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 385px; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    right: 385px;
+    bottom: 0;
+    background-color: rgba(211, 213, 214, 0.5);  /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    transition: 0.4s;
+}

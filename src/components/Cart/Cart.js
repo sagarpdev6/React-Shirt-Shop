@@ -5,7 +5,6 @@ import { Row, Col } from 'reactstrap';
 class Cart extends Component {
     openShipping = () => {
         this.props.openShipping();
-        this.refs.cartOverlay.style.display = "block";
     }
 
     closeCart = () => {
@@ -14,7 +13,6 @@ class Cart extends Component {
     render() {
         return (
             <div>
-                <div className="cart-overlay" ref="cartOverlay"></div>
                 <div className="cart-container">
                     <Row className="cart-header">
                         <Col className="cart-title" xs="8">Shopping Cart</Col>

@@ -35,12 +35,6 @@ nav {
     background-color: transparent !important;
 }
 
-@media only screen and (min-width: 500px) {
-    .fluid-container {
-        padding-left: 100px !important;
-    }
-}
-
 .vr {
     height: 54px;
     width: 1px;
@@ -81,7 +75,7 @@ nav {
 }
 
 /* Side nav Cart */
-.sidenav-cart, .sidenav-shipping, .sidenav-payment {
+.sidenav-cart, .sidenav-shipping, .sidenav-payment, .sidenav-confirmation {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
@@ -122,4 +116,63 @@ div.disabled {
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
+}
+
+
+.cart-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 385px; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    right: 385px;
+    bottom: 0;
+    background-color: rgba(211, 213, 214, 0.5);  /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    transition: 0.4s;
+}
+
+.shipping-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 770px; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    right: 385px;
+    bottom: 0;
+    background-color: rgba(211, 213, 214, 0.5);   /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    transition: 0.2s;
+}
+
+@media only screen and (min-width: 500px) {
+    .fluid-container {
+        padding-left: 100px !important;
+    }
+}
+
+
+/* Sidenav media queries */
+@media only screen and (min-width: 500px) {
+    .sidenav-cart, .sidenav-shipping, .sidenav-payment {
+        max-width: 385px;
+    }
+
+    .sidenav-confirmation {
+        max-width: 600px;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    .sidenav-confirmation {
+        max-width: 800px;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    .sidenav-confirmation {
+        max-width: 1200px;
+    }
 }

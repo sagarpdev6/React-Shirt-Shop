@@ -7,6 +7,7 @@ import Shirt from '../Shirt/Shirt';
 import Cart from '../Cart/Cart';
 import SidenavShipping from '../SidenavShipping/SidenavShipping';
 import Payment from '../Payment/Payment';
+import Confirmation from '../Confirmation/Confirmation';
 
 import { shirtList } from '../Models/ShirtListModel';
 
@@ -22,6 +23,7 @@ class Catalog extends Component {
         this.openShipping = this.openShipping.bind(this);
         this.openPayment = this.openPayment.bind(this);
         this.checkout = this.checkout.bind(this);
+        this.goToCatalog = this.goToCatalog.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -39,7 +41,7 @@ class Catalog extends Component {
 
     openCart = () => {
         console.log('Cart Open');
-        this.refs.cart.style.width = "385px";
+        this.refs.cart.style.width = "100%";
         this.refs.overlay.style.display = "block";
     }
 
@@ -52,36 +54,55 @@ class Catalog extends Component {
     openShipping = () => {
         console.log('Go To Shipping');
         this.refs.cart.style.right = "385px";
-        this.refs.shipping.style.width = "385px";
+        this.refs.shipping.style.width = "100%";
+        this.refs.cartOverlay.style.display = "block";
     }
 
     openPayment = () => {
         console.log('Go To Payment');
         this.refs.cart.style.right = "770px";
-        this.refs.payment.style.width = "385px";
+        this.refs.payment.style.width = "100%";
         this.refs.shipping.style.right = "385px";
+        this.refs.shippingOverlay.style.display = "block";
     }
 
     checkout = () => {
         this.setState({
             showConfirmation: true
         })
-        this.refs.payment.style.width = "75vw";
+        this.refs.payment.style.width = "100%";
         this.refs.cart.style.width = "0";
         this.refs.shipping.style.width = "0";
+        this.refs.shippingOverlay.style.display = "none";
+        this.refs.cartOverlay.style.display = "none";
+    }
+
+    goToCatalog = () => {
+        // Reset fixed positioning for all 3 side nav components and set showConfirmation to false 
+        this.refs.payment.style.width = "0";
+        this.refs.overlay.style.display = "none";
+        this.refs.cart.style.width = "0";
+        this.refs.cart.style.right = "0";
+        this.refs.shipping.style.width = "0";
+        this.refs.shipping.style.right = "0";
+        this.setState({
+            showConfirmation: false
+        })
     }
 
     render() {
         return (
             <div>
                 <div id="cart" className="sidenav-cart" ref="cart">
+                    <div className="cart-overlay" ref="cartOverlay"></div>
                     <Cart openShipping={this.openShipping} closeCart={this.closeCart} />
                 </div>
                 <div className="sidenav-shipping" ref="shipping">
+                    <div className="shipping-overlay" ref="shippingOverlay"></div>
                     <SidenavShipping openPayment={this.openPayment} />
                 </div>
-                <div className="sidenav-payment" ref="payment">
-                    {!this.state.showConfirmation ? <Payment checkout={this.checkout} /> : <div>Confirmation</div>}
+                <div className={!this.state.showConfirmation ? "sidenav-payment" : "sidenav-confirmation"} ref="payment">
+                    {!this.state.showConfirmation ? <Payment checkout={this.checkout} /> : <Confirmation goToCatalog={this.goToCatalog} />}
                 </div>
                 <Navbar color="faded" light>
                     <Row className="nav-toggle-btn">

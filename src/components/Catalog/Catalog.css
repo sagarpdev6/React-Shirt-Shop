@@ -153,7 +153,6 @@ div.disabled {
     }
 }
 
-
 /* Sidenav media queries */
 @media only screen and (min-width: 500px) {
     .sidenav-cart, .sidenav-shipping, .sidenav-payment {

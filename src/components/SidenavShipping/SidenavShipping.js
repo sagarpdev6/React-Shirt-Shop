@@ -30,14 +30,12 @@ class SidenavShipping extends Component {
 
     openPayment = () => {
         this.props.openPayment();
-        this.refs.shippingOverlay.style.display = "block";
     }
 
     render() {
         let regionsForSelectedCountry = regions[this.state.country];
         return (
             <div>
-                <div className="shipping-overlay" ref="shippingOverlay"></div>
                 <div className="sidenav-shipping-container">
                     <div className="sidenav-shipping-title">Shipping Info</div>
                     <hr />

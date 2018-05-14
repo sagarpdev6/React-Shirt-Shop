@@ -61,9 +61,11 @@ class Catalog extends Component {
     openPayment = () => {
         console.log('Go To Payment');
         this.refs.cart.style.right = "770px";
+        this.refs.cartOverlay.style.right = "770px";
         this.refs.payment.style.width = "100%";
         this.refs.shipping.style.right = "385px";
         this.refs.shippingOverlay.style.display = "block";
+
     }
 
     checkout = () => {

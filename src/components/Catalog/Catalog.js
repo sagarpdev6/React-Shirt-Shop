@@ -56,6 +56,7 @@ class Catalog extends Component {
         this.refs.cart.style.right = "385px";
         this.refs.shipping.style.width = "100%";
         this.refs.cartOverlay.style.display = "block";
+        this.refs.cartOverlay.style.right = "385px";
     }
 
     openPayment = () => {
@@ -69,6 +70,7 @@ class Catalog extends Component {
     }
 
     checkout = () => {
+        console.log('Go To Checkout');
         this.setState({
             showConfirmation: true
         })
@@ -80,6 +82,7 @@ class Catalog extends Component {
     }
 
     goToCatalog = () => {
+        console.log('Go Back To Catalog');
         // Reset fixed positioning for all 3 side nav components and set showConfirmation to false 
         this.refs.payment.style.width = "0";
         this.refs.overlay.style.display = "none";

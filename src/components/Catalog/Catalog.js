@@ -26,12 +26,37 @@ class Catalog extends Component {
         this.goToCatalog = this.goToCatalog.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
         this.state = {
             activeTab: '1',
             showConfirmation: false,
-            shirtsInCart: []
+            shirtsInCart: [],
+            sidenavOpen: false
         };
+    }
+
+    handleClick() {
+        if (!this.state.sidenavOpen) {
+            // attach/remove event handler
+            document.addEventListener('click', this.handleOutsideClick, false);
+        } else {
+            document.removeEventListener('click', this.handleOutsideClick, false);
+        }
+
+        this.setState(prevState => ({
+            sidenavOpen: !prevState.sidenavOpen,
+        }));
+    }
+
+    handleOutsideClick = (e) => {
+        // ignore clicks on the component itself
+        if ((e.target.className !== 'overlay')) {
+            return;
+        }
+
+        this.closeCart();
     }
 
     toggle(tab) {
@@ -43,15 +68,27 @@ class Catalog extends Component {
     }
 
     openCart = () => {
+        this.setState({ sidenavOpen: true });
         console.log('Cart Open');
         this.refs.cart.style.width = "100%";
         this.refs.overlay.style.display = "block";
+        this.handleClick();
     }
 
     closeCart = () => {
+        this.setState({ sidenavOpen: false });
         console.log('Cart Closed');
         this.refs.cart.style.width = "0";
         this.refs.overlay.style.display = "none";
+        this.refs.shipping.style.width = "0";
+        this.refs.cart.style.right = "0";
+        this.refs.shipping.style.right = "0";
+        this.refs.shippingOverlay.style.display = "none";
+        this.refs.cartOverlay.style.display = "none";
+        this.refs.payment.style.width = "0";
+        this.setState({
+            showConfirmation: false
+        })
     }
 
     openShipping = () => {

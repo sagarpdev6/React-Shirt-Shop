@@ -24,10 +24,13 @@ class Catalog extends Component {
         this.openPayment = this.openPayment.bind(this);
         this.checkout = this.checkout.bind(this);
         this.goToCatalog = this.goToCatalog.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+        this.removeFromCart = this.removeFromCart.bind(this);
 
         this.state = {
             activeTab: '1',
-            showConfirmation: false
+            showConfirmation: false,
+            shirtsInCart: []
         };
     }
 
@@ -95,12 +98,47 @@ class Catalog extends Component {
         })
     }
 
+    addToCart = (shirt) => {
+        console.log('Add to Cart');
+        let cartItems = this.state.shirtsInCart;
+        let index = cartItems.findIndex(item => {
+            return shirt.image === item.image;
+        });
+
+        if (index !== -1) {
+            cartItems[index].quantity += 1;
+        } else {
+            shirt.quantity += 1;
+            cartItems.push(shirt);
+        }
+        this.setState({
+            shirtsInCart: cartItems
+        });
+    }
+
+    removeFromCart = (shirt) => {
+        console.log('Remove');
+        shirt.quantity = 0;
+        let cartItems = this.state.shirtsInCart;
+        let index = cartItems.findIndex(item => {
+            return shirt.image === item.image;
+        });
+        cartItems.splice(index, 1);
+        this.setState({
+            shirtsInCart: cartItems
+        });
+    }
+
+    updateQuantity = (event) => {
+        console.log('Update');
+    }
+
     render() {
         return (
             <div>
                 <div id="cart" className="sidenav-cart" ref="cart">
                     <div className="cart-overlay" ref="cartOverlay"></div>
-                    <Cart openShipping={this.openShipping} closeCart={this.closeCart} />
+                    <Cart openShipping={this.openShipping} closeCart={this.closeCart} shirtsInCart={this.state.shirtsInCart} removeFromCart={this.removeFromCart} updateQuantity={this.updateQuantity} />
                 </div>
                 <div className="sidenav-shipping" ref="shipping">
                     <div className="shipping-overlay" ref="shippingOverlay"></div>
@@ -120,7 +158,7 @@ class Catalog extends Component {
 
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>
                             <div className="nav-icon-basket"></div>
-                            <div className="cart-count">3</div>
+                            <div className="cart-count">{this.state.shirtsInCart.length}</div>
                         </Row>
                     </Row>
                 </Navbar>
@@ -145,7 +183,7 @@ class Catalog extends Component {
                             {/* All Shirt List Goes Here */}
                             <Row>
                                 {shirtList.map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} />
+                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                                 ))}
                             </Row>
                         </TabPane>
@@ -153,7 +191,7 @@ class Catalog extends Component {
                             {/* Men Shirt List Goes Here */}
                             <Row>
                                 {shirtList.filter(shirt => { return shirt.gender === 'M' }).map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} />
+                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                                 ))}
                             </Row>
                         </TabPane>
@@ -161,7 +199,7 @@ class Catalog extends Component {
                             {/* Women Shirt List Goes Here */}
                             <Row>
                                 {shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} />
+                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                                 ))}
                             </Row>
                         </TabPane>

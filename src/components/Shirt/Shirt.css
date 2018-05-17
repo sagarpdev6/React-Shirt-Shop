@@ -37,9 +37,11 @@
 }
 
 .icon-basket {
-    content: url('../../images/icon-basket.svg') ;
+    content: url('../../images/icon-basket.svg');
+    cursor: pointer;
 }
 
 .icon-edit {
-    content: url('../../images/icon-edit.svg');   
+    content: url('../../images/icon-edit.svg');
+    cursor: pointer; 
 }

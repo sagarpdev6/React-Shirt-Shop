@@ -26,28 +26,13 @@ class Catalog extends Component {
         this.goToCatalog = this.goToCatalog.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
-        this.handleClick = this.handleClick.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
         this.state = {
             activeTab: '1',
             showConfirmation: false,
-            shirtsInCart: [],
-            sidenavOpen: false
+            shirtsInCart: []
         };
-    }
-
-    handleClick() {
-        if (!this.state.sidenavOpen) {
-            // attach/remove event handler
-            document.addEventListener('click', this.handleOutsideClick, false);
-        } else {
-            document.removeEventListener('click', this.handleOutsideClick, false);
-        }
-
-        this.setState(prevState => ({
-            sidenavOpen: !prevState.sidenavOpen,
-        }));
     }
 
     handleOutsideClick = (e) => {
@@ -55,7 +40,6 @@ class Catalog extends Component {
         if ((e.target.className !== 'overlay')) {
             return;
         }
-
         this.closeCart();
     }
 
@@ -68,15 +52,14 @@ class Catalog extends Component {
     }
 
     openCart = () => {
-        this.setState({ sidenavOpen: true });
         console.log('Cart Open');
         this.refs.cart.style.width = "100%";
         this.refs.overlay.style.display = "block";
-        this.handleClick();
+
+        document.addEventListener('click', this.handleOutsideClick, false);
     }
 
     closeCart = () => {
-        this.setState({ sidenavOpen: false });
         console.log('Cart Closed');
         this.refs.cart.style.width = "0";
         this.refs.overlay.style.display = "none";
@@ -88,7 +71,8 @@ class Catalog extends Component {
         this.refs.payment.style.width = "0";
         this.setState({
             showConfirmation: false
-        })
+        });
+        document.removeEventListener('click', this.handleOutsideClick, false);
     }
 
     openShipping = () => {
@@ -141,13 +125,15 @@ class Catalog extends Component {
         let index = cartItems.findIndex(item => {
             return shirt.image === item.image;
         });
-
         if (index !== -1) {
+            // If shirt exists in cart, update its quantity in cart
             cartItems[index].quantity += 1;
         } else {
+            // Update the shirt quantity and add it to cart
             shirt.quantity += 1;
             cartItems.push(shirt);
         }
+        // Update the state with new list
         this.setState({
             shirtsInCart: cartItems
         });
@@ -166,8 +152,19 @@ class Catalog extends Component {
         });
     }
 
-    updateQuantity = (event) => {
+    updateQuantity = (shirt) => {
+        // Update the quantity from the input text box
         console.log('Update');
+        let cartItems = this.state.shirtsInCart;
+        let index = cartItems.findIndex(item => {
+            return shirt.image === item.image;
+        });
+        if (index !== -1) {
+            cartItems[index].quantity = shirt.quantity;
+        }
+        this.setState({
+            shirtsInCart: cartItems
+        });
     }
 
     render() {

@@ -9,15 +9,14 @@ class ShirtInCart extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            quantity: this.props.shirt.quantity
-        };
+        this.updateQuantity = this.updateQuantity.bind(this);
     }
 
     updateQuantity = (event) => {
-        this.props.updateQuantity(event);
-        // this.setState({ quantity: event.target.value });
+        let shirt = this.props.shirt;
+        let quantity = parseInt(event.target.value, 10);
+        shirt.quantity = isNaN(quantity) ? 0 : quantity;
+        this.props.updateQuantity(shirt);
     }
 
     removeFromCart = () => {
@@ -41,7 +40,7 @@ class ShirtInCart extends Component {
                         <option value="L">Large</option>
                     </select>
                     <Row className="quantity-row">
-                        <input type="number" className="form-control form-control-sm quantity" value={this.state.quantity} onChange={() => { this.updateQuantity(); }} />
+                        <input type="text" maxLength="3" className="form-control form-control-sm quantity" value={this.props.shirt.quantity} onChange={this.updateQuantity} />
                         <div className="price-txt">@{this.props.shirt.price}</div>
                     </Row>
                 </Col>

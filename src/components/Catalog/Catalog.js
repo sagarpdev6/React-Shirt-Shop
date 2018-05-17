@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import './Catalog.css';
-import classnames from 'classnames';
-import { Container, Row, Navbar, NavbarToggler, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 
-import Shirt from '../Shirt/Shirt';
+import { Row, Navbar, NavbarToggler } from 'reactstrap';
+
 import Cart from '../Cart/Cart';
 import SidenavShipping from '../SidenavShipping/SidenavShipping';
 import Payment from '../Payment/Payment';
 import Confirmation from '../Confirmation/Confirmation';
+import Design from '../Design/Design';
+import CatalogTabs from '../CatalogTabs/CatalogTabs';
 
-import { shirtList } from '../Models/ShirtListModel';
 
 
 class Catalog extends Component {
@@ -17,7 +17,6 @@ class Catalog extends Component {
     constructor() {
         super();
 
-        this.toggle = this.toggle.bind(this);
         this.openCart = this.openCart.bind(this);
         this.closeCart = this.closeCart.bind(this);
         this.openShipping = this.openShipping.bind(this);
@@ -27,11 +26,13 @@ class Catalog extends Component {
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
+        this.openShirtDesign = this.openShirtDesign.bind(this);
 
         this.state = {
             activeTab: '1',
             showConfirmation: false,
-            shirtsInCart: []
+            shirtsInCart: [],
+            openDesign: false
         };
     }
 
@@ -41,14 +42,6 @@ class Catalog extends Component {
             return;
         }
         this.closeCart();
-    }
-
-    toggle(tab) {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
-        }
     }
 
     openCart = () => {
@@ -96,7 +89,8 @@ class Catalog extends Component {
     checkout = () => {
         console.log('Go To Checkout');
         this.setState({
-            showConfirmation: true
+            showConfirmation: true,
+            shirtsInCart: []
         })
         this.refs.payment.style.width = "100%";
         this.refs.cart.style.width = "0";
@@ -167,6 +161,12 @@ class Catalog extends Component {
         });
     }
 
+    openShirtDesign = () => {
+        this.setState({
+            openDesign: !this.state.openDesign
+        });
+    }
+
     render() {
         return (
             <div>
@@ -187,7 +187,7 @@ class Catalog extends Component {
                         <div className="vr"></div>
                     </Row>
                     <Row className="cart-btn-container">
-                        <button className="primary-btn nav-btn">NEW DESIGN</button>
+                        <button className="primary-btn nav-btn" onClick={() => { this.openShirtDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
                         <div className="vr"></div>
 
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>
@@ -196,49 +196,10 @@ class Catalog extends Component {
                         </Row>
                     </Row>
                 </Navbar>
-                <Container fluid className="fluid-container">
+                <div>
                     <div className="overlay" ref="overlay"></div>
-                    <Nav tabs className="catalog-tabs">
-                        <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '1' })}
-                                onClick={() => { this.toggle('1'); }}>All Designs</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '2' })}
-                                onClick={() => { this.toggle('2'); }}>Men</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className={classnames({ active: this.state.activeTab === '3' })}
-                                onClick={() => { this.toggle('3'); }}>Women</NavLink>
-                        </NavItem>
-                    </Nav>
-                    <TabContent activeTab={this.state.activeTab}>
-                        <TabPane tabId="1">
-                            {/* All Shirt List Goes Here */}
-                            <Row>
-                                {shirtList.map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
-                                ))}
-                            </Row>
-                        </TabPane>
-                        <TabPane tabId="2">
-                            {/* Men Shirt List Goes Here */}
-                            <Row>
-                                {shirtList.filter(shirt => { return shirt.gender === 'M' }).map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
-                                ))}
-                            </Row>
-                        </TabPane>
-                        <TabPane tabId="3">
-                            {/* Women Shirt List Goes Here */}
-                            <Row>
-                                {shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
-                                    <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
-                                ))}
-                            </Row>
-                        </TabPane>
-                    </TabContent>
-                </Container>
+                    {this.state.openDesign ? <Design /> : <CatalogTabs addToCart={this.addToCart} />}
+                </div>
             </div>
         );
     }

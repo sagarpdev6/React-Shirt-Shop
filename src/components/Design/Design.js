@@ -26,7 +26,6 @@ class Design extends Component {
             activeTab: '1',
             styleList: [{ image: 'MensShirt-', description: 'Mens Fine Jersey Short Sleeve' },
             { image: 'WomensShirt-', description: 'Womens Fine Jersey Short Sleeve' }],
-            colors: [{ name: 'White', backgroundColor: '#FFFFFF' }, { name: 'Grey', backgroundColor: '#CDCDCD' }, { name: 'Black', backgroundColor: '#444444' }, { name: 'Blue', backgroundColor: '#2674A8' }, { name: 'Green', backgroundColor: '#44A265' }, { name: 'Yellow', backgroundColor: '#F4DA70' }, { name: 'Purple', backgroundColor: '#6E5BD6' }, { name: 'Red', backgroundColor: '#A7386B' }],
             selectedStyle: 'MensShirt-',
             selectedShirtColor: 'White',
             selectedGraphic: '',

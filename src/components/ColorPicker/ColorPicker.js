@@ -26,7 +26,7 @@ class ColorPicker extends Component {
                 <Row className="color-picker-row">
                     {this.state.colors.map((color, index) => (
                         <div key={index} >
-                            <div className={"color-div " + classnames({ active: this.props.selectedColor === color.name })} onClick={() => { this.selectColor(color.name); }} style={color}>
+                            <div className={"color-div " + classnames({ active: this.props.selectedColor === color.name })} onClick={() => { this.selectColor(color); }} style={color}>
                             </div>
                             <div className="color-name">{color.name}</div>
                         </div>

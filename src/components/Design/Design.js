@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 import ColorPicker from '../ColorPicker/ColorPicker';
 import Graphic from '../Graphic/Graphic';
+import Text from '../Text/Text';
 
 const background = require('../../images/Fractal.png');
 
@@ -17,6 +18,8 @@ class Design extends Component {
         this.selectColor = this.selectColor.bind(this);
         this.selectGraphic = this.selectGraphic.bind(this);
         this.renderImage = this.renderImage.bind(this);
+        this.addShirtText = this.addShirtText.bind(this);
+        this.changeTextFont = this.changeTextFont.bind(this);
         this.makeDraggable = this.makeDraggable.bind(this);
 
         this.state = {
@@ -28,7 +31,9 @@ class Design extends Component {
             selectedShirtColor: 'White',
             selectedGraphic: '',
             selectedGraphicColor: 'White',
-            selectedTextColor: 'White'
+            selectedTextColor: 'White',
+            shirtText: '',
+            fontStyle: "'Montserrat', sans-serif"
         };
     }
 
@@ -50,17 +55,17 @@ class Design extends Component {
         switch (attribute) {
             case 'shirt':
                 this.setState({
-                    selectedShirtColor: color
+                    selectedShirtColor: color.name
                 });
                 break;
             case 'text':
                 this.setState({
-                    selectedTextColor: color
+                    selectedTextColor: color.backgroundColor
                 });
                 break;
             case 'graphic':
                 this.setState({
-                    selectedGraphicColor: color
+                    selectedGraphicColor: color.name
                 });
                 break;
             default:
@@ -76,6 +81,18 @@ class Design extends Component {
         this.refs.graphicImage.style.display = "block";
         // Make Image draggable
         this.makeDraggable(this.refs.graphicImage);
+    }
+
+    addShirtText = (text) => {
+        this.setState({
+            shirtText: text
+        })
+        // Make Text draggable
+        this.makeDraggable(this.refs.text);
+    }
+
+    changeTextFont = (event) => {
+        this.setState({ fontStyle: event.target.value });
     }
 
     makeDraggable = (element) => {
@@ -166,6 +183,7 @@ class Design extends Component {
                                     <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.state.selectedGraphicColor} title={'Change graphic colour'} />
                                 </TabPane>
                                 <TabPane tabId="4">
+                                    <Text text={this.state.shirtText} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
                                     <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.state.selectedTextColor} title={'Change text colour'} />
                                 </TabPane>
                             </TabContent>
@@ -175,6 +193,7 @@ class Design extends Component {
                         <Card className="img-configurator">
                             <img className="img-fluid" src={require(`../../images/${this.renderImage(this.state.selectedStyle, this.state.selectedShirtColor)}.jpg`)} alt="shirt style" />
                             <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.state.selectedGraphic ? require(`../../images/${this.state.selectedGraphic}`) : ''} alt="shirt graphic" />
+                            <div ref="text" className="shirt-text" style={{ color: this.state.selectedTextColor, fontFamily: this.state.fontStyle }}>{this.state.shirtText}</div>
                         </Card>
                     </Col>
                 </Row>

@@ -39,7 +39,7 @@ class Graphic extends Component {
                 <Row className="graphic-row">
                     {this.state.graphics.map((graphic, index) => (
                         <div key={index} >
-                            <div className={"graphic-div " + classnames({ active: this.props.selectedGraphic === graphic.name })} onClick={() => { this.selectGraphic(graphic.name); }}>
+                            <div className={"graphic-div " + classnames({ active: this.props.selectedGraphic === graphic.image })} onClick={() => { this.selectGraphic(graphic.image); }}>
                                 <img src={require(`../../images/${graphic.image}`)} alt="graphic" />
                             </div>
                         </div>

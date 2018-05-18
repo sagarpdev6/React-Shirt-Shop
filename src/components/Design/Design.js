@@ -17,6 +17,7 @@ class Design extends Component {
         this.selectColor = this.selectColor.bind(this);
         this.selectGraphic = this.selectGraphic.bind(this);
         this.renderImage = this.renderImage.bind(this);
+        this.makeDraggable = this.makeDraggable.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -69,8 +70,44 @@ class Design extends Component {
         }
     }
 
-    selectGraphic(graphic) {
+    selectGraphic = (graphic) => {
         this.setState({ selectedGraphic: graphic });
+        // Show Image
+        this.refs.graphicImage.style.display = "block";
+        // Make Image draggable
+        this.makeDraggable(this.refs.graphicImage);
+    }
+
+    makeDraggable = (element) => {
+        let mousePosition;
+        let offset = [0, 0];
+        let isDown = false;
+        element.addEventListener('mousedown', function (e) {
+            isDown = true;
+            offset = [
+                element.offsetLeft - e.clientX,
+                element.offsetTop - e.clientY
+            ];
+        }, true);
+
+        document.addEventListener('mouseup', function () {
+            isDown = false;
+        }, true);
+
+        document.addEventListener('mousemove', function (event) {
+            event.preventDefault();
+            if (isDown) {
+                mousePosition = {
+
+                    x: event.clientX,
+                    y: event.clientY
+
+                };
+                element.style.left = (mousePosition.x + offset[0]) + 'px';
+                element.style.top = (mousePosition.y + offset[1]) + 'px';
+            }
+        }, true);
+
     }
 
     renderImage(image, color) {
@@ -137,6 +174,7 @@ class Design extends Component {
                     <Col className="style-config-col">
                         <Card className="img-configurator">
                             <img className="img-fluid" src={require(`../../images/${this.renderImage(this.state.selectedStyle, this.state.selectedShirtColor)}.jpg`)} alt="shirt style" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.state.selectedGraphic ? require(`../../images/${this.state.selectedGraphic}`) : ''} alt="shirt graphic" />
                         </Card>
                     </Col>
                 </Row>

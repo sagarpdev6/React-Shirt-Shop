@@ -5,8 +5,6 @@ import { Container, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reac
 
 import Shirt from '../Shirt/Shirt';
 
-import { shirtList } from '../Models/ShirtListModel';
-
 class CatalogTabs extends Component {
 
     constructor() {
@@ -52,7 +50,7 @@ class CatalogTabs extends Component {
                     <TabPane tabId="1">
                         {/* All Shirt List Goes Here */}
                         <Row>
-                            {shirtList.map(shirt => (
+                            {this.props.shirtList.map(shirt => (
                                 <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                             ))}
                         </Row>
@@ -60,7 +58,7 @@ class CatalogTabs extends Component {
                     <TabPane tabId="2">
                         {/* Men Shirt List Goes Here */}
                         <Row>
-                            {shirtList.filter(shirt => { return shirt.gender === 'M' }).map(shirt => (
+                            {this.props.shirtList.filter(shirt => { return shirt.gender === 'M' }).map(shirt => (
                                 <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                             ))}
                         </Row>
@@ -68,7 +66,7 @@ class CatalogTabs extends Component {
                     <TabPane tabId="3">
                         {/* Women Shirt List Goes Here */}
                         <Row>
-                            {shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
+                            {this.props.shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
                                 <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
                             ))}
                         </Row>

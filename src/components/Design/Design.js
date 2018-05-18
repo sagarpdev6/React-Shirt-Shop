@@ -26,13 +26,6 @@ class Design extends Component {
             activeTab: '1',
             styleList: [{ image: 'MensShirt-', description: 'Mens Fine Jersey Short Sleeve' },
             { image: 'WomensShirt-', description: 'Womens Fine Jersey Short Sleeve' }],
-            selectedStyle: 'MensShirt-',
-            selectedShirtColor: 'White',
-            selectedGraphic: '',
-            selectedGraphicColor: 'White',
-            selectedTextColor: 'White',
-            shirtText: '',
-            fontStyle: "'Montserrat', sans-serif"
         };
     }
 
@@ -45,53 +38,29 @@ class Design extends Component {
     }
 
     selectStyle(style) {
-        this.setState({
-            selectedStyle: style
-        });
+        this.props.selectStyle(style);
     }
 
     selectColor(color, attribute) {
-        switch (attribute) {
-            case 'shirt':
-                this.setState({
-                    selectedShirtColor: color.name
-                });
-                break;
-            case 'text':
-                this.setState({
-                    selectedTextColor: color.backgroundColor
-                });
-                break;
-            case 'graphic':
-                this.setState({
-                    selectedGraphicColor: color.name
-                });
-                break;
-            default:
-                this.setState({
-                    selectedGraphicColor: 'White'
-                });
-        }
+        this.props.selectColor(color, attribute);
     }
 
     selectGraphic = (graphic) => {
-        this.setState({ selectedGraphic: graphic });
         // Show Image
         this.refs.graphicImage.style.display = "block";
         // Make Image draggable
-        this.makeDraggable(this.refs.graphicImage);
+        let element = this.makeDraggable(this.refs.graphicImage);
+        this.props.selectGraphic(graphic, element);
     }
 
     addShirtText = (text) => {
-        this.setState({
-            shirtText: text
-        })
         // Make Text draggable
-        this.makeDraggable(this.refs.text);
+        let element = this.makeDraggable(this.refs.text);
+        this.props.addShirtText(text, element);
     }
 
     changeTextFont = (event) => {
-        this.setState({ fontStyle: event.target.value });
+        this.props.changeTextFont(event.target.value);
     }
 
     makeDraggable = (element) => {
@@ -123,6 +92,8 @@ class Design extends Component {
                 element.style.top = (mousePosition.y + offset[1]) + 'px';
             }
         }, true);
+
+        return element;
 
     }
 
@@ -164,7 +135,7 @@ class Design extends Component {
                                         <Row className="select-style-row">
                                             {this.state.styleList.map((style, index) => (
                                                 <Col key={index}>
-                                                    <div className={"style-img-container " + classnames({ active: this.state.selectedStyle === style.image })} onClick={() => { this.selectStyle(style.image); }}>
+                                                    <div className={"style-img-container " + classnames({ active: this.props.shirtDesign.selectedStyle === style.image })} onClick={() => { this.selectStyle(style.image); }}>
                                                         <img className="img-fluid" src={require(`../../images/${this.renderImage(style.image, 'white')}.jpg`)} alt="shirt style" />
                                                     </div>
                                                     <div className="style-description">{style.description}</div>
@@ -174,25 +145,25 @@ class Design extends Component {
                                     </Container>
                                 </TabPane>
                                 <TabPane tabId="2">
-                                    <ColorPicker selectColor={this.selectColor} attribute={'shirt'} selectedColor={this.state.selectedShirtColor} title={'Choose a shirt colour'} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'shirt'} selectedColor={this.props.shirtDesign.selectedShirtColor} title={'Choose a shirt colour'} />
                                 </TabPane>
                                 <TabPane tabId="3">
-                                    <Graphic selectedGraphic={this.state.selectedGraphic} selectGraphic={this.selectGraphic} />
+                                    <Graphic selectedGraphic={this.props.shirtDesign.selectedGraphic} selectGraphic={this.selectGraphic} />
                                     <hr />
-                                    <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.state.selectedGraphicColor} title={'Change graphic colour'} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.props.shirtDesign.selectedGraphicColor} title={'Change graphic colour'} />
                                 </TabPane>
                                 <TabPane tabId="4">
-                                    <Text text={this.state.shirtText} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
-                                    <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.state.selectedTextColor} title={'Change text colour'} />
+                                    <Text text={this.props.shirtDesign.shirtText} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.props.shirtDesign.selectedTextColor} title={'Change text colour'} />
                                 </TabPane>
                             </TabContent>
                         </Card>
                     </Col>
                     <Col className="style-config-col">
                         <Card className="img-configurator">
-                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.state.selectedStyle, this.state.selectedShirtColor)}.jpg`)} alt="shirt style" />
-                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.state.selectedGraphic ? require(`../../images/${this.state.selectedGraphic}`) : ''} alt="shirt graphic" />
-                            <div ref="text" className="shirt-text" style={{ color: this.state.selectedTextColor, fontFamily: this.state.fontStyle }}>{this.state.shirtText}</div>
+                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtDesign.selectedStyle, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtDesign.selectedGraphic ? require(`../../images/${this.props.shirtDesign.selectedGraphic}`) : ''} alt="shirt graphic" />
+                            <div ref="text" className="shirt-text" style={{ color: this.props.shirtDesign.selectedTextColor, fontFamily: this.props.shirtDesign.fontStyle }}>{this.props.shirtDesign.shirtText}</div>
                         </Card>
                     </Col>
                 </Row>

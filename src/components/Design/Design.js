@@ -3,6 +3,9 @@ import './Design.css';
 import { Container, Row, Col, Card, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 
+import ColorPicker from '../ColorPicker/ColorPicker';
+import Graphic from '../Graphic/Graphic';
+
 const background = require('../../images/Fractal.png');
 
 class Design extends Component {
@@ -12,7 +15,9 @@ class Design extends Component {
         this.toggle = this.toggle.bind(this);
         this.selectStyle = this.selectStyle.bind(this);
         this.selectColor = this.selectColor.bind(this);
+        this.selectGraphic = this.selectGraphic.bind(this);
         this.renderImage = this.renderImage.bind(this);
+        this.makeDraggable = this.makeDraggable.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -20,7 +25,10 @@ class Design extends Component {
             { image: 'WomensShirt-', description: 'Womens Fine Jersey Short Sleeve' }],
             colors: [{ name: 'White', backgroundColor: '#FFFFFF' }, { name: 'Grey', backgroundColor: '#CDCDCD' }, { name: 'Black', backgroundColor: '#444444' }, { name: 'Blue', backgroundColor: '#2674A8' }, { name: 'Green', backgroundColor: '#44A265' }, { name: 'Yellow', backgroundColor: '#F4DA70' }, { name: 'Purple', backgroundColor: '#6E5BD6' }, { name: 'Red', backgroundColor: '#A7386B' }],
             selectedStyle: 'MensShirt-',
-            selectedColor: 'White'
+            selectedShirtColor: 'White',
+            selectedGraphic: '',
+            selectedGraphicColor: 'White',
+            selectedTextColor: 'White'
         };
     }
 
@@ -35,13 +43,71 @@ class Design extends Component {
     selectStyle(style) {
         this.setState({
             selectedStyle: style
-        })
+        });
     }
 
-    selectColor(color) {
-        this.setState({
-            selectedColor: color
-        })
+    selectColor(color, attribute) {
+        switch (attribute) {
+            case 'shirt':
+                this.setState({
+                    selectedShirtColor: color
+                });
+                break;
+            case 'text':
+                this.setState({
+                    selectedTextColor: color
+                });
+                break;
+            case 'graphic':
+                this.setState({
+                    selectedGraphicColor: color
+                });
+                break;
+            default:
+                this.setState({
+                    selectedGraphicColor: 'White'
+                });
+        }
+    }
+
+    selectGraphic = (graphic) => {
+        this.setState({ selectedGraphic: graphic });
+        // Show Image
+        this.refs.graphicImage.style.display = "block";
+        // Make Image draggable
+        this.makeDraggable(this.refs.graphicImage);
+    }
+
+    makeDraggable = (element) => {
+        let mousePosition;
+        let offset = [0, 0];
+        let isDown = false;
+        element.addEventListener('mousedown', function (e) {
+            isDown = true;
+            offset = [
+                element.offsetLeft - e.clientX,
+                element.offsetTop - e.clientY
+            ];
+        }, true);
+
+        document.addEventListener('mouseup', function () {
+            isDown = false;
+        }, true);
+
+        document.addEventListener('mousemove', function (event) {
+            event.preventDefault();
+            if (isDown) {
+                mousePosition = {
+
+                    x: event.clientX,
+                    y: event.clientY
+
+                };
+                element.style.left = (mousePosition.x + offset[0]) + 'px';
+                element.style.top = (mousePosition.y + offset[1]) + 'px';
+            }
+        }, true);
+
     }
 
     renderImage(image, color) {
@@ -92,27 +158,23 @@ class Design extends Component {
                                     </Container>
                                 </TabPane>
                                 <TabPane tabId="2">
-                                    <Container className="select-style-container">
-                                        <div className="style-title">Choose a shirt style</div>
-                                        <Row className="select-color-row">
-                                            {this.state.colors.map((color, index) => (
-                                                <Col key={index}>
-                                                    <div className={"style-color-container " + classnames({ active: this.state.selectedColor === color.name })} onClick={() => { this.selectColor(color.name); }} style={color}>
-                                                    </div>
-                                                    <div className="color-name">{color.name}</div>
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    </Container>
+                                    <ColorPicker selectColor={this.selectColor} attribute={'shirt'} selectedColor={this.state.selectedShirtColor} title={'Choose a shirt colour'} />
                                 </TabPane>
-                                <TabPane tabId="3"></TabPane>
-                                <TabPane tabId="4"></TabPane>
+                                <TabPane tabId="3">
+                                    <Graphic selectedGraphic={this.state.selectedGraphic} selectGraphic={this.selectGraphic} />
+                                    <hr />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.state.selectedGraphicColor} title={'Change graphic colour'} />
+                                </TabPane>
+                                <TabPane tabId="4">
+                                    <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.state.selectedTextColor} title={'Change text colour'} />
+                                </TabPane>
                             </TabContent>
                         </Card>
                     </Col>
                     <Col className="style-config-col">
                         <Card className="img-configurator">
-                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.state.selectedStyle, this.state.selectedColor)}.jpg`)} alt="shirt style" />
+                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.state.selectedStyle, this.state.selectedShirtColor)}.jpg`)} alt="shirt style" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.state.selectedGraphic ? require(`../../images/${this.state.selectedGraphic}`) : ''} alt="shirt graphic" />
                         </Card>
                     </Col>
                 </Row>

@@ -15,6 +15,13 @@ nav {
     align-items: center;
 }
 
+.input-shirt-title {
+    margin-right: 30px;
+    color: #10A2DC;
+    font-size: 16px;
+    font-weight: 700;
+}
+
 .vr {
     height: 54px;
     width: 1px;

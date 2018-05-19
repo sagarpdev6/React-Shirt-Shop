@@ -45,3 +45,14 @@
     content: url('../../images/icon-edit.svg');
     cursor: pointer; 
 }
+
+.shirt-graphic-img {
+    width: 200px;
+    position: absolute;
+}
+
+.shirt-text-final {
+    position: absolute;
+    font-size: 68px;
+    text-align: center;
+}

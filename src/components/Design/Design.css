@@ -81,8 +81,13 @@
 
 }
 
-.graphic-img {
+.graphic-img, .shirt-text {
     position: absolute;
     width: 380px;
+}
+
+.shirt-text {
+    font-size: 68px;
+    text-align: center;
 }
 

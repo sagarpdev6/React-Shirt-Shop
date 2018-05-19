@@ -201,6 +201,8 @@ class Catalog extends Component {
             image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
             graphic: this.state.selectedGraphic,
             text: this.state.shirtText,
+            textColor: this.state.selectedTextColor,
+            font: this.state.fontStyle,
             graphicElementPosition: { top: this.state.graphicElement.style.top, left: this.state.graphicElement.style.left },
             textElementPosition: { top: this.state.textElement.style.top, left: this.state.textElement.style.left },
         };

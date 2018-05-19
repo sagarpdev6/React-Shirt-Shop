@@ -11,6 +11,10 @@ class Shirt extends Component {
     render() {
         return (
             <Card className="text-center">
+                {this.props.shirt.graphic ?
+                    <img ref="graphicImage" className="img-fluid shirt-graphic-img" style={{ left: this.props.shirt.textElementPosition.left, top: this.props.shirt.textElementPosition.top }} src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}`) : ''} alt="shirt graphic" /> : null}
+                {this.props.shirt.text ?
+                    <div ref="text" className="shirt-text-final" style={{ color: this.props.shirt.textColor, fontFamily: this.props.shirt.font, left: this.props.shirt.graphicElementPosition.left, top: this.props.shirt.graphicElementPosition.top }}>{this.props.shirt.text}</div> : null}
                 <img className="img-fluid" src={require(`../../images/${this.props.shirt.image}`)} alt="Shirt" />
                 <h4 className="card-title">{this.props.shirt.name}</h4>
                 <p className="description">{this.props.shirt.description}</p>

@@ -183,34 +183,13 @@ class Catalog extends Component {
 
     openShirtDesign = () => {
         this.setState({
-            openDesign: true
+            openDesign: !this.state.openDesign
         });
     }
 
     setShirtTitle = (event) => {
         this.setState({
             newTitle: event.target.value
-        });
-    }
-
-    saveShirtDesign = () => {
-        let newShirt = {
-            id: shirtList.length + 1,
-            name: this.state.newTitle,
-            description: '',
-            price: 15,
-            image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
-            graphic: this.state.selectedGraphic,
-            text: this.state.shirtText,
-            textColor: this.state.selectedTextColor,
-            font: this.state.fontStyle,
-            graphicElementPosition: { top: this.state.graphicElement.style.top, left: this.state.graphicElement.style.left },
-            textElementPosition: { top: this.state.textElement.style.top, left: this.state.textElement.style.left },
-        };
-
-        shirtList.push(newShirt);
-        this.setState({
-            openDesign: false
         });
     }
 
@@ -313,7 +292,7 @@ class Catalog extends Component {
                     </Row>
                     <Row className="cart-btn-container">
                         {this.state.openDesign ? <input className="input-shirt-title" type="text" value={this.state.newTitle} onChange={this.setShirtTitle} /> : null}
-                        <button className="primary-btn nav-btn" onClick={() => { this.openShirtDesign() }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
+                        <button className="primary-btn nav-btn" onClick={() => { this.openShirtDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
                         <div className="vr"></div>
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>
                             <div className="nav-icon-basket"></div>

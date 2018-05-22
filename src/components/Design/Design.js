@@ -102,8 +102,7 @@ class Design extends Component {
     }
 
     componentWillUnmount() {
-        let element = document.getElementById('imageRef');
-
+        // let element = document.getElementById('imageRef');
         this.props.saveShirtDesign();
     }
 

@@ -183,7 +183,13 @@ class Catalog extends Component {
 
     openShirtDesign = () => {
         this.setState({
-            openDesign: !this.state.openDesign
+            openDesign: true
+        });
+    }
+
+    setShirtTitle = (event) => {
+        this.setState({
+            newTitle: event.target.value
         });
     }
 

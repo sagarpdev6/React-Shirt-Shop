@@ -13,6 +13,15 @@ class Cart extends Component {
     closeCart = () => {
         this.props.closeCart();
     }
+
+    calculateTotal = () => {
+        let total = 0;
+        this.props.shirtsInCart.forEach((shirt) => {
+            total += shirt.subtotal;
+        });
+        return Math.round(total * 100) / 100;
+    }
+
     render() {
         return (
             <div>
@@ -33,6 +42,7 @@ class Cart extends Component {
                             <hr />
                         </div>
                     ))}
+                    {this.props.shirtsInCart.length > 0 ? <div className="subtotal">Subtotal:  <span>${this.calculateTotal()}</span></div> : null}
                     <button type="button" className="primary-btn" onClick={() => { this.openShipping(); }}>GO TO SHIPPING -></button>
                 </div>
             </div>

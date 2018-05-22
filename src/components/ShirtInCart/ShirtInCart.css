@@ -1,8 +1,6 @@
 .shirt-in-cart-img {
     background-color: #FFFFFF;
-    height: 140px;
-    width: 120px;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #CDCDCD;
     border-radius: 4px;
 }
@@ -72,4 +70,15 @@ input[type=number]::-webkit-outer-spin-button {
 
 .shirt-in-cart-description, .size-select {
     margin-bottom: 10px;
+}
+
+.cart-shirt-graphic-img {
+    width: 40px;
+    position: absolute;
+}
+
+.cart-shirt-text-final {
+    position: absolute;
+    font-size: 10px;
+    text-align: center;
 }

@@ -101,6 +101,12 @@ class Design extends Component {
         return image + color.toLowerCase();
     }
 
+    componentWillUnmount() {
+        let element = document.getElementById('imageRef');
+
+        this.props.saveShirtDesign();
+    }
+
     render() {
         return (
             <Container fluid className="design-container">
@@ -110,24 +116,26 @@ class Design extends Component {
                 <Row className="style-config-row">
                     <Col className="style-config-col">
                         <Card className="style-card">
-                            <Nav tabs className="style-tabs">
-                                <NavItem>
-                                    <NavLink className={classnames({ active: this.state.activeTab === '1' })}
-                                        onClick={() => { this.toggle('1'); }}>Styles</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className={classnames({ active: this.state.activeTab === '2' })}
-                                        onClick={() => { this.toggle('2'); }}>Colours</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className={classnames({ active: this.state.activeTab === '3' })}
-                                        onClick={() => { this.toggle('3'); }}>Graphics</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className={classnames({ active: this.state.activeTab === '4' })}
-                                        onClick={() => { this.toggle('4'); }}>Text</NavLink>
-                                </NavItem>
-                            </Nav>
+                            <div className="style-tabs-container">
+                                <Nav tabs className="style-tabs">
+                                    <NavItem>
+                                        <NavLink className={classnames({ active: this.state.activeTab === '1' })}
+                                            onClick={() => { this.toggle('1'); }}>Styles</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className={classnames({ active: this.state.activeTab === '2' })}
+                                            onClick={() => { this.toggle('2'); }}>Colours</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className={classnames({ active: this.state.activeTab === '3' })}
+                                            onClick={() => { this.toggle('3'); }}>Graphics</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className={classnames({ active: this.state.activeTab === '4' })}
+                                            onClick={() => { this.toggle('4'); }}>Text</NavLink>
+                                    </NavItem>
+                                </Nav>
+                            </div>
                             <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId="1">
                                     <Container fluid className="select-style-container">
@@ -160,7 +168,7 @@ class Design extends Component {
                         </Card>
                     </Col>
                     <Col className="style-config-col">
-                        <Card className="img-configurator">
+                        <Card className="img-configurator" id="imageRef">
                             <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtDesign.selectedStyle, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
                             <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtDesign.selectedGraphic ? require(`../../images/${this.props.shirtDesign.selectedGraphic}`) : ''} alt="shirt graphic" />
                             <div ref="text" className="shirt-text" style={{ color: this.props.shirtDesign.selectedTextColor, fontFamily: this.props.shirtDesign.fontStyle }}>{this.props.shirtDesign.shirtText}</div>

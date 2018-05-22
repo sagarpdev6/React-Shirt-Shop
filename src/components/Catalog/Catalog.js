@@ -42,6 +42,7 @@ class Catalog extends Component {
             showConfirmation: false,
             shirtList: shirtList,
             shirtsInCart: [],
+            total: 0,
             openDesign: false,
             newTitle: 'untitled_design-1',
             selectedStyle: 'MensShirt-',
@@ -103,14 +104,17 @@ class Catalog extends Component {
         this.refs.payment.style.width = "100%";
         this.refs.shipping.style.right = "385px";
         this.refs.shippingOverlay.style.display = "block";
-
     }
 
     checkout = () => {
         console.log('Go To Checkout');
+        shirtList.forEach(shirt => {
+            shirt.quantity = 0;
+        });
         this.setState({
             showConfirmation: true,
-            shirtsInCart: []
+            shirtsInCart: [],
+            shirtList: shirtList
         });
         this.refs.payment.style.width = "100%";
         this.refs.cart.style.width = "0";
@@ -142,9 +146,12 @@ class Catalog extends Component {
         if (index !== -1) {
             // If shirt exists in cart, update its quantity in cart
             cartItems[index].quantity += 1;
+            cartItems[index].subtotal = cartItems[index].quantity * cartItems[index].price;
+
         } else {
             // Update the shirt quantity and add it to cart
             shirt.quantity += 1;
+            shirt.subtotal = shirt.quantity * shirt.price;
             cartItems.push(shirt);
         }
         // Update the state with new list
@@ -175,6 +182,7 @@ class Catalog extends Component {
         });
         if (index !== -1) {
             cartItems[index].quantity = shirt.quantity;
+            cartItems[index].subtotal = cartItems[index].quantity * cartItems[index].price;
         }
         this.setState({
             shirtsInCart: cartItems
@@ -208,6 +216,7 @@ class Catalog extends Component {
             description: '',
             price: 18.99,
             quantity: 0,
+            subtotal: 0,
             image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
             graphic: this.state.selectedGraphic,
             text: this.state.shirtText,

@@ -26,6 +26,7 @@ class Catalog extends Component {
         this.checkout = this.checkout.bind(this);
         this.goToCatalog = this.goToCatalog.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.editShirt = this.editShirt.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
         this.openShirtDesign = this.openShirtDesign.bind(this);
@@ -53,7 +54,8 @@ class Catalog extends Component {
             shirtText: '',
             fontStyle: "'Montserrat', sans-serif",
             graphicElement: null,
-            textElement: null
+            textElement: null,
+            shirtToEdit: null
         };
     }
 
@@ -160,6 +162,14 @@ class Catalog extends Component {
         });
     }
 
+    editShirt = (shirt) => {
+        console.log('Edit Shirt');
+        this.setState({
+            openDesign: !this.state.openDesign,
+            shirtToEdit: shirt
+        });
+    }
+
     removeFromCart = (shirt) => {
         console.log('Remove');
         shirt.quantity = 0;
@@ -213,22 +223,26 @@ class Catalog extends Component {
         let newShirt = {
             id: shirtList.length + 1,
             name: this.state.newTitle,
-            description: '',
+            description: 'Custom Shirt Design',
             price: 18.99,
             quantity: 0,
             subtotal: 0,
-            image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
+            image: this.state.shirtToEdit ? this.state.shirtToEdit.image : this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
             graphic: this.state.selectedGraphic,
             text: this.state.shirtText,
             textColor: this.state.selectedTextColor,
             font: this.state.fontStyle,
-            graphicElementPosition: { top: this.state.graphicElement.style.top, left: this.state.graphicElement.style.left },
-            textElementPosition: { top: this.state.textElement.style.top, left: this.state.textElement.style.left },
+            graphicElementPosition: { top: this.state.graphicElement ? this.state.graphicElement.style.top : "10px", left: this.state.graphicElement ? this.state.graphicElement.style.left : "10px" },
+            textElementPosition: { top: this.state.textElement ? this.state.textElement.style.top : "10px", left: this.state.textElement ? this.state.textElement.style.left : "10px" },
         };
 
         list.push(newShirt);
+
         this.setState({
-            shirtList: list
+            shirtList: list,
+            shirtText: '',
+            shirtToEdit: null,
+            selectedShirtColor: 'White'
         });
     }
 
@@ -311,7 +325,7 @@ class Catalog extends Component {
                 </Navbar>
                 <div>
                     <div className="overlay" ref="overlay"></div>
-                    {this.state.openDesign ? <Design saveShirtDesign={this.saveShirtDesign} shirtDesign={{
+                    {this.state.openDesign ? <Design shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} shirtDesign={{
                         selectedStyle: this.state.selectedStyle,
                         selectedShirtColor: this.state.selectedShirtColor,
                         selectedGraphic: this.state.selectedGraphic,
@@ -319,7 +333,7 @@ class Catalog extends Component {
                         selectedTextColor: this.state.selectedTextColor,
                         shirtText: this.state.shirtText,
                         fontStyle: this.state.fontStyle
-                    }} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} /> : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} />}
+                    }} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} /> : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} editShirt={this.editShirt} />}
                 </div>
             </div>
         );

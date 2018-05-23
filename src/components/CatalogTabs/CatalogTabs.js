@@ -11,6 +11,7 @@ class CatalogTabs extends Component {
         super();
         this.toggle = this.toggle.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.editShirt = this.editShirt.bind(this);
 
         this.state = {
             activeTab: '1'
@@ -19,6 +20,10 @@ class CatalogTabs extends Component {
 
     addToCart = (shirt) => {
         this.props.addToCart(shirt);
+    }
+
+    editShirt = (shirt) => {
+        this.props.editShirt(shirt);
     }
 
     toggle(tab) {
@@ -51,7 +56,7 @@ class CatalogTabs extends Component {
                         {/* All Shirt List Goes Here */}
                         <Row>
                             {this.props.shirtList.map(shirt => (
-                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
+                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} editShirt={this.editShirt} />
                             ))}
                         </Row>
                     </TabPane>
@@ -59,7 +64,7 @@ class CatalogTabs extends Component {
                         {/* Men Shirt List Goes Here */}
                         <Row>
                             {this.props.shirtList.filter(shirt => { return shirt.gender === 'M' }).map(shirt => (
-                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
+                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} editShirt={this.editShirt} />
                             ))}
                         </Row>
                     </TabPane>
@@ -67,7 +72,7 @@ class CatalogTabs extends Component {
                         {/* Women Shirt List Goes Here */}
                         <Row>
                             {this.props.shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
-                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} />
+                                <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} editShirt={this.editShirt} />
                             ))}
                         </Row>
                     </TabPane>

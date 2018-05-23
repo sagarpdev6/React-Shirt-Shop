@@ -8,6 +8,10 @@ class Shirt extends Component {
         this.props.addToCart(this.props.shirt);
     }
 
+    editShirt = () => {
+        this.props.editShirt(this.props.shirt);
+    }
+
     reCalculate = (pixels, parameter) => {
         let newPixels;
         pixels = pixels.substring(0, pixels.length - 2);
@@ -40,7 +44,7 @@ class Shirt extends Component {
                         <Col className="text" xs="8">
                             <strong>${this.props.shirt.price}</strong>
                         </Col>
-                        <Col className="icon-edit" xs="2"></Col>
+                        <Col className="icon-edit" xs="2" onClick={() => { this.editShirt(); }}></Col>
                     </Row>
                 </Container>
             </Card>

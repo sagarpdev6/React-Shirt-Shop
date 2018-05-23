@@ -29,6 +29,14 @@ class Design extends Component {
         };
     }
 
+    componentDidMount() {
+        if (this.props.shirtToEdit) {
+            this.refs.graphicImage.style.display = "block";
+            this.makeDraggable(this.refs.text);
+            this.makeDraggable(this.refs.graphicImage);
+        }
+    }
+
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -98,18 +106,17 @@ class Design extends Component {
     }
 
     renderImage(image, color) {
-        let finalImage = '';
-        if (!this.props.shirtToEdit) {
-            finalImage = image + color.toLowerCase() + '.jpg';
-        } else {
-            finalImage = this.props.shirtToEdit.image;
-        }
-        return finalImage;
+        return image + color.toLowerCase();
+    }
+
+    getImageColor(image) {
+        let colorArr = image.split('-');
+        return colorArr[1];
     }
 
     componentWillUnmount() {
         // let element = document.getElementById('imageRef');
-        this.props.saveShirtDesign();
+        this.props.saveShirtDesign(this.props.shirtToEdit);
     }
 
     render() {
@@ -149,7 +156,7 @@ class Design extends Component {
                                             {this.state.styleList.map((style, index) => (
                                                 <Col key={index}>
                                                     <div className={"style-img-container " + classnames({ active: this.props.shirtDesign.selectedStyle === style.image })} onClick={() => { this.selectStyle(style.image); }}>
-                                                        <img className="img-fluid" src={require(`../../images/${this.renderImage(style.image, 'white')}`)} alt="shirt style" />
+                                                        <img className="img-fluid" src={require(`../../images/${this.renderImage(style.image, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
                                                     </div>
                                                     <div className="style-description">{style.description}</div>
                                                 </Col>
@@ -174,7 +181,7 @@ class Design extends Component {
                     </Col>
                     <Col className="style-config-col">
                         <Card className="img-configurator" id="imageRef">
-                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtDesign.selectedStyle, this.props.shirtDesign.selectedShirtColor)}`)} alt="shirt style" />
+                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtDesign.selectedStyle, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
                             <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtDesign.selectedGraphic ? require(`../../images/${this.props.shirtDesign.selectedGraphic}`) : ''} alt="shirt graphic" />
                             <div ref="text" className="shirt-text" style={{ color: this.props.shirtDesign.selectedTextColor, fontFamily: this.props.shirtDesign.fontStyle }}>{this.props.shirtDesign.shirtText}</div>
                         </Card>

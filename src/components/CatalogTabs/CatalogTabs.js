@@ -71,7 +71,7 @@ class CatalogTabs extends Component {
                     <TabPane tabId="3">
                         {/* Women Shirt List Goes Here */}
                         <Row>
-                            {this.props.shirtList.filter(shirt => { return shirt.gender === 'F' }).map(shirt => (
+                            {this.props.shirtList.filter(shirt => { return shirt.gender === 'W' }).map(shirt => (
                                 <Shirt key={shirt.id} shirt={shirt} addToCart={this.addToCart} editShirt={this.editShirt} />
                             ))}
                         </Row>

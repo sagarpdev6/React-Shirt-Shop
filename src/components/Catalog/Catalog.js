@@ -37,6 +37,7 @@ class Catalog extends Component {
         this.selectGraphic = this.selectGraphic.bind(this);
         this.addShirtText = this.addShirtText.bind(this);
         this.changeTextFont = this.changeTextFont.bind(this);
+        this.saveDesign = this.saveDesign.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -55,7 +56,8 @@ class Catalog extends Component {
             fontStyle: "'Montserrat', sans-serif",
             graphicElement: null,
             textElement: null,
-            shirtToEdit: null
+            shirtToEdit: null,
+            action: ''
         };
     }
 
@@ -166,7 +168,12 @@ class Catalog extends Component {
         console.log('Edit Shirt');
         this.setState({
             openDesign: !this.state.openDesign,
-            shirtToEdit: shirt
+            shirtToEdit: shirt,
+            selectedShirtColor: shirt.image.split('-')[1],
+            selectedGraphic: shirt.graphic,
+            shirtText: shirt.text,
+            fontStyle: shirt.font,
+            selectedStyle: shirt.image.split('-')[0] + '-'
         });
     }
 
@@ -201,7 +208,19 @@ class Catalog extends Component {
 
     openShirtDesign = () => {
         this.setState({
-            openDesign: !this.state.openDesign
+            openDesign: false
+        });
+    }
+
+    saveDesign = () => {
+        this.setState({
+            openDesign: true
+        });
+
+        this.setState({
+            shirtText: '',
+            selectedShirtColor: 'White',
+            selectedGraphic: ''
         });
     }
 
@@ -217,17 +236,18 @@ class Catalog extends Component {
         });
     }
 
-    saveShirtDesign = () => {
+    saveShirtDesign = (shirt) => {
         console.log('Shirt Save');
         let list = this.state.shirtList;
         let newShirt = {
-            id: shirtList.length + 1,
+            id: this.state.shirtToEdit ? shirt.id : shirtList.length + 1,
             name: this.state.newTitle,
             description: 'Custom Shirt Design',
             price: 18.99,
             quantity: 0,
             subtotal: 0,
-            image: this.state.shirtToEdit ? this.state.shirtToEdit.image : this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase() + '.jpg',
+            gender: this.state.selectedStyle.split('')[0],
+            image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase(),
             graphic: this.state.selectedGraphic,
             text: this.state.shirtText,
             textColor: this.state.selectedTextColor,
@@ -236,13 +256,21 @@ class Catalog extends Component {
             textElementPosition: { top: this.state.textElement ? this.state.textElement.style.top : "10px", left: this.state.textElement ? this.state.textElement.style.left : "10px" },
         };
 
-        list.push(newShirt);
+        let index = list.findIndex(shirt => {
+            return shirt.id === newShirt.id;
+        })
+
+        if (index === -1) {
+            list.push(newShirt);
+        } else {
+            list[index] = newShirt;
+        }
+
+
 
         this.setState({
             shirtList: list,
-            shirtText: '',
-            shirtToEdit: null,
-            selectedShirtColor: 'White'
+            shirtToEdit: null
         });
     }
 
@@ -315,7 +343,7 @@ class Catalog extends Component {
                     </Row>
                     <Row className="cart-btn-container">
                         {this.state.openDesign ? <input className="input-shirt-title" type="text" value={this.state.newTitle} onChange={this.setShirtTitle} /> : null}
-                        <button className="primary-btn nav-btn" onClick={() => { this.openShirtDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
+                        <button className="primary-btn nav-btn" onClick={() => { this.state.openDesign ? this.openShirtDesign() : this.saveDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
                         <div className="vr"></div>
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>
                             <div className="nav-icon-basket"></div>
@@ -325,7 +353,7 @@ class Catalog extends Component {
                 </Navbar>
                 <div>
                     <div className="overlay" ref="overlay"></div>
-                    {this.state.openDesign ? <Design shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} shirtDesign={{
+                    {this.state.openDesign ? <Design action={this.state.action} shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} shirtDesign={{
                         selectedStyle: this.state.selectedStyle,
                         selectedShirtColor: this.state.selectedShirtColor,
                         selectedGraphic: this.state.selectedGraphic,

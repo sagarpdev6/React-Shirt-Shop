@@ -35,7 +35,7 @@ class Shirt extends Component {
                     <img ref="graphicImage" className="img-fluid shirt-graphic-img" style={{ left: this.reCalculate(this.props.shirt.textElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.textElementPosition.top, 'top') }} src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}`) : ''} alt="shirt graphic" /> : null}
                 {this.props.shirt.text ?
                     <div ref="text" className="shirt-text-final" style={{ color: this.props.shirt.textColor, fontFamily: this.props.shirt.font, left: this.reCalculate(this.props.shirt.graphicElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.graphicElementPosition.top, 'top') }}>{this.props.shirt.text}</div> : null}
-                <img className="img-fluid" src={require(`../../images/${this.props.shirt.image}`)} alt="Shirt" />
+                <img className="img-fluid" src={require(`../../images/${this.props.shirt.image}.jpg`)} alt="Shirt" />
                 <h4 className="card-title">{this.props.shirt.name}</h4>
                 <p className="description">{this.props.shirt.description}</p>
                 <Container>

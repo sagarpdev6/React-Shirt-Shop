@@ -224,6 +224,7 @@ class Catalog extends Component {
 
         let list = this.state.shirtList;
         newShirt.image = newShirt.shirtStyle + '-' + newShirt.shirtColor.name.toLowerCase();
+        newShirt.gender = newShirt.shirtStyle[0];
 
         if (this.state.action === 'new') {
             newShirt.id = list.length + 1;

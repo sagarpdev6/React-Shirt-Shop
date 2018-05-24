@@ -12,7 +12,7 @@ import CatalogTabs from '../CatalogTabs/CatalogTabs';
 
 import { shirtList } from '../Models/ShirtListModel';
 
-
+const navLogo = require('../../images/navlogo.png');
 
 class Catalog extends Component {
 
@@ -29,7 +29,7 @@ class Catalog extends Component {
         this.editShirt = this.editShirt.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
-        this.openShirtDesign = this.openShirtDesign.bind(this);
+        this.newShirtDesign = this.newShirtDesign.bind(this);
         this.setShirtTitle = this.setShirtTitle.bind(this);
         this.saveShirtDesign = this.saveShirtDesign.bind(this);
         this.selectStyle = this.selectStyle.bind(this);
@@ -37,7 +37,6 @@ class Catalog extends Component {
         this.selectGraphic = this.selectGraphic.bind(this);
         this.addShirtText = this.addShirtText.bind(this);
         this.changeTextFont = this.changeTextFont.bind(this);
-        this.saveDesign = this.saveDesign.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -46,17 +45,19 @@ class Catalog extends Component {
             shirtsInCart: [],
             total: 0,
             openDesign: false,
-            newTitle: 'untitled_design-1',
-            selectedStyle: 'MensShirt-',
-            selectedShirtColor: 'White',
-            selectedGraphic: '',
-            selectedGraphicColor: 'White',
-            selectedTextColor: 'White',
-            shirtText: '',
-            fontStyle: "'Montserrat', sans-serif",
-            graphicElement: null,
-            textElement: null,
-            shirtToEdit: null,
+            shirtToEdit: {
+                name: 'untitled_design',
+                price: 18.99,
+                quantity: 0,
+                subtotal: 0,
+                shirtStyle: 'MensShirt',
+                shirtColor: { name: 'white', color: '#FFFFFF' },
+                text: '',
+                textColor: { name: 'white', color: '#FFFFFF' },
+                font: "'Montserrat', sans-serif",
+                graphic: '',
+                graphicColor: { name: 'white', color: '#FFFFFF' },
+            },
             action: ''
         };
     }
@@ -167,13 +168,9 @@ class Catalog extends Component {
     editShirt = (shirt) => {
         console.log('Edit Shirt');
         this.setState({
-            openDesign: !this.state.openDesign,
+            openDesign: true,
             shirtToEdit: shirt,
-            selectedShirtColor: shirt.image.split('-')[1],
-            selectedGraphic: shirt.graphic,
-            shirtText: shirt.text,
-            fontStyle: shirt.font,
-            selectedStyle: shirt.image.split('-')[0] + '-'
+            action: 'edit'
         });
     }
 
@@ -206,120 +203,103 @@ class Catalog extends Component {
         });
     }
 
-    openShirtDesign = () => {
+    newShirtDesign = () => {
         this.setState({
-            openDesign: false
-        });
-    }
-
-    saveDesign = () => {
-        this.setState({
-            openDesign: true
-        });
-
-        this.setState({
-            shirtText: '',
-            selectedShirtColor: 'White',
-            selectedGraphic: ''
+            openDesign: true,
+            action: 'new'
         });
     }
 
     setShirtTitle = (event) => {
+        let shirt = this.state.shirtToEdit;
+        shirt.name = event.target.value;
         this.setState({
-            newTitle: event.target.value
+            shirtToEdit: shirt
         });
     }
 
-    setShirtTitle = (event) => {
-        this.setState({
-            newTitle: event.target.value
-        });
-    }
-
-    saveShirtDesign = (shirt) => {
+    saveShirtDesign = () => {
+        let newShirt = this.state.shirtToEdit;
         console.log('Shirt Save');
+
         let list = this.state.shirtList;
-        let newShirt = {
-            id: this.state.shirtToEdit ? shirt.id : shirtList.length + 1,
-            name: this.state.newTitle,
-            description: 'Custom Shirt Design',
+        newShirt.image = newShirt.shirtStyle + '-' + newShirt.shirtColor.name.toLowerCase();
+
+        if (this.state.action === 'new') {
+            newShirt.id = list.length + 1;
+            newShirt.description = 'Custom Shirt Design';
+            list.push(newShirt);
+        } else {
+            list[newShirt.id - 1] = newShirt;
+        }
+
+        let blankShirt = {
+            name: 'untitled_design',
             price: 18.99,
             quantity: 0,
             subtotal: 0,
-            gender: this.state.selectedStyle.split('')[0],
-            image: this.state.selectedStyle + this.state.selectedShirtColor.toLowerCase(),
-            graphic: this.state.selectedGraphic,
-            text: this.state.shirtText,
-            textColor: this.state.selectedTextColor,
-            font: this.state.fontStyle,
-            graphicElementPosition: { top: this.state.graphicElement ? this.state.graphicElement.style.top : "10px", left: this.state.graphicElement ? this.state.graphicElement.style.left : "10px" },
-            textElementPosition: { top: this.state.textElement ? this.state.textElement.style.top : "10px", left: this.state.textElement ? this.state.textElement.style.left : "10px" },
+            shirtStyle: 'MensShirt',
+            shirtColor: { name: 'white', color: '#FFFFFF' },
+            text: '',
+            textColor: { name: 'white', color: '#FFFFFF' },
+            font: "'Montserrat', sans-serif",
+            graphic: '',
+            graphicColor: { name: 'white', color: '#FFFFFF' },
         };
 
-        let index = list.findIndex(shirt => {
-            return shirt.id === newShirt.id;
-        })
-
-        if (index === -1) {
-            list.push(newShirt);
-        } else {
-            list[index] = newShirt;
-        }
-
-
-
         this.setState({
+            openDesign: false,
             shirtList: list,
-            shirtToEdit: null
+            action: '',
+            // Reset to a blank shirt
+            shirtToEdit: blankShirt
         });
     }
 
     selectStyle(style) {
+        let shirt = this.state.shirtToEdit;
+        shirt.shirtStyle = style;
         this.setState({
-            selectedStyle: style
+            shirtToEdit: shirt
         });
     }
 
     selectColor(color, attribute) {
+        let shirt = this.state.shirtToEdit;
         switch (attribute) {
             case 'shirt':
-                this.setState({
-                    selectedShirtColor: color.name
-                });
+                shirt.shirtColor = color;
                 break;
             case 'text':
-                this.setState({
-                    selectedTextColor: color.backgroundColor
-                });
+                shirt.textColor = color;
                 break;
             case 'graphic':
-                this.setState({
-                    selectedGraphicColor: color.name
-                });
+                shirt.graphicColor = color;
                 break;
             default:
-                this.setState({
-                    selectedGraphicColor: 'White'
-                });
+                break;
         }
-    }
-
-    selectGraphic = (graphic, element) => {
         this.setState({
-            selectedGraphic: graphic,
-            graphicElement: element
-        });
-    }
-
-    addShirtText = (text, element) => {
-        this.setState({
-            shirtText: text,
-            textElement: element
+            shirtToEdit: shirt
         })
     }
 
+    selectGraphic = (graphic) => {
+        let shirt = this.state.shirtToEdit;
+        shirt.graphic = graphic;
+        this.setState({ shirtToEdit: shirt });
+    }
+
+    addShirtText = (text) => {
+        let shirt = this.state.shirtToEdit;
+        shirt.text = text;
+        this.setState({ shirtToEdit: shirt });
+    }
+
     changeTextFont = (font) => {
-        this.setState({ fontStyle: font });
+        let shirt = this.state.shirtToEdit;
+        shirt.font = font;
+        this.setState({ shirtToEdit: shirt });
     }
 
     render() {
@@ -340,10 +320,17 @@ class Catalog extends Component {
                     <Row className="nav-toggle-btn">
                         <NavbarToggler className="mr-2" />
                         <div className="vr"></div>
+                        <img className="nav-logo" src={navLogo} alt="logo" />
                     </Row>
                     <Row className="cart-btn-container">
-                        {this.state.openDesign ? <input className="input-shirt-title" type="text" value={this.state.newTitle} onChange={this.setShirtTitle} /> : null}
-                        <button className="primary-btn nav-btn" onClick={() => { this.state.openDesign ? this.openShirtDesign() : this.saveDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
+                        {this.state.openDesign ?
+                            <div>
+                                <input className="input-shirt-title" type="text" value={this.state.shirtToEdit.name} onChange={this.setShirtTitle} />
+                                <button className="primary-btn nav-btn" onClick={() => { this.saveShirtDesign(); }}>SAVE DESIGN</button>
+                            </div> :
+                            <button className="primary-btn nav-btn" onClick={() => { this.newShirtDesign(); }}>NEW DESIGN</button>}
+
+
                         <div className="vr"></div>
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>
                             <div className="nav-icon-basket"></div>
@@ -353,15 +340,7 @@ class Catalog extends Component {
                 </Navbar>
                 <div>
                     <div className="overlay" ref="overlay"></div>
-                    {this.state.openDesign ? <Design action={this.state.action} shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} shirtDesign={{
-                        selectedStyle: this.state.selectedStyle,
-                        selectedShirtColor: this.state.selectedShirtColor,
-                        selectedGraphic: this.state.selectedGraphic,
-                        selectedGraphicColor: this.state.selectedGraphicColor,
-                        selectedTextColor: this.state.selectedTextColor,
-                        shirtText: this.state.shirtText,
-                        fontStyle: this.state.fontStyle
-                    }} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} /> : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} editShirt={this.editShirt} />}
+                    {this.state.openDesign ? <Design action={this.state.action} shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} /> : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} editShirt={this.editShirt} />}
                 </div>
             </div>
         );

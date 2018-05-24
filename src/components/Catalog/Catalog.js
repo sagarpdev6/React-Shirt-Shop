@@ -12,7 +12,7 @@ import CatalogTabs from '../CatalogTabs/CatalogTabs';
 
 import { shirtList } from '../Models/ShirtListModel';
 
-
+const navLogo = require('../../images/navlogo.png');
 
 class Catalog extends Component {
 
@@ -241,7 +241,7 @@ class Catalog extends Component {
         let list = this.state.shirtList;
         let newShirt = {
             id: this.state.shirtToEdit ? shirt.id : shirtList.length + 1,
-            name: this.state.newTitle,
+            name: this.state.shirtToEdit ? this.state.shirtToEdit.name : this.state.newTitle,
             description: 'Custom Shirt Design',
             price: 18.99,
             quantity: 0,
@@ -340,9 +340,10 @@ class Catalog extends Component {
                     <Row className="nav-toggle-btn">
                         <NavbarToggler className="mr-2" />
                         <div className="vr"></div>
+                        <img className="nav-logo" src={navLogo} alt="logo" />
                     </Row>
                     <Row className="cart-btn-container">
-                        {this.state.openDesign ? <input className="input-shirt-title" type="text" value={this.state.newTitle} onChange={this.setShirtTitle} /> : null}
+                        {this.state.openDesign ? <input className="input-shirt-title" type="text" value={this.state.shirtToEdit ? this.state.shirtToEdit.name : this.state.newTitle} onChange={this.setShirtTitle} /> : null}
                         <button className="primary-btn nav-btn" onClick={() => { this.state.openDesign ? this.openShirtDesign() : this.saveDesign(); }}>{this.state.openDesign ? 'SAVE DESIGN' : 'NEW DESIGN'}</button>
                         <div className="vr"></div>
                         <Row className="cart-btn" onClick={() => { this.openCart(); }}>

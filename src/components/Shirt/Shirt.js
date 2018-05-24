@@ -17,10 +17,10 @@ class Shirt extends Component {
         pixels = pixels.substring(0, pixels.length - 2);
         switch (parameter) {
             case 'left':
-                newPixels = (parseInt(pixels, 10) / 678) * 100 + 5 + "%";
+                newPixels = (parseInt(pixels, 10) / 678) * 100 + 25 + "%";
                 break;
             case 'top':
-                newPixels = (parseInt(pixels, 10) / 813) * 100 + "%";
+                newPixels = (parseInt(pixels, 10) / 813) * 100 + 30 + "%";
                 break;
             default:
                 newPixels = "100px";
@@ -32,9 +32,9 @@ class Shirt extends Component {
         return (
             <Card className="text-center">
                 {this.props.shirt.graphic ?
-                    <img ref="graphicImage" className="img-fluid shirt-graphic-img" style={{ left: this.reCalculate(this.props.shirt.textElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.textElementPosition.top, 'top') }} src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}`) : ''} alt="shirt graphic" /> : null}
+                    <img ref="graphicImage" className="img-fluid shirt-graphic-img" style={{ left: "115px", top: "140px" }} src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}`) : ''} alt="shirt graphic" /> : null}
                 {this.props.shirt.text ?
-                    <div ref="text" className="shirt-text-final" style={{ color: this.props.shirt.textColor, fontFamily: this.props.shirt.font, left: this.reCalculate(this.props.shirt.graphicElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.graphicElementPosition.top, 'top') }}>{this.props.shirt.text}</div> : null}
+                    <div ref="text" className="shirt-text-final" style={{ color: this.props.shirt.textColor, fontFamily: this.props.shirt.font, left: "115px", top: "80px", fontSize: "20px" }}>{this.props.shirt.text}</div> : null}
                 <img className="img-fluid" src={require(`../../images/${this.props.shirt.image}.jpg`)} alt="Shirt" />
                 <h4 className="card-title">{this.props.shirt.name}</h4>
                 <p className="description">{this.props.shirt.description}</p>

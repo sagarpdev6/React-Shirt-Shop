@@ -24,16 +24,16 @@ class Design extends Component {
 
         this.state = {
             activeTab: '1',
-            styleList: [{ image: 'MensShirt-', description: 'Mens Fine Jersey Short Sleeve' },
-            { image: 'WomensShirt-', description: 'Womens Fine Jersey Short Sleeve' }],
+            styleList: [{ image: 'MensShirt', description: 'Mens Fine Jersey Short Sleeve' },
+            { image: 'WomensShirt', description: 'Womens Fine Jersey Short Sleeve' }],
         };
     }
 
     componentDidMount() {
         if (this.props.shirtToEdit) {
-            this.refs.graphicImage.style.display = "block";
-            this.makeDraggable(this.refs.text);
-            this.makeDraggable(this.refs.graphicImage);
+            // this.refs.graphicImage.style.display = "block";
+            // this.makeDraggable(this.refs.text);
+            // this.makeDraggable(this.refs.graphicImage);
         }
     }
 
@@ -106,7 +106,7 @@ class Design extends Component {
     }
 
     renderImage(image, color) {
-        return image + color.toLowerCase();
+        return image + '-' + color.toLowerCase();
     }
 
     getImageColor(image) {
@@ -155,8 +155,8 @@ class Design extends Component {
                                         <Row className="select-style-row">
                                             {this.state.styleList.map((style, index) => (
                                                 <Col key={index}>
-                                                    <div className={"style-img-container " + classnames({ active: this.props.shirtDesign.selectedStyle === style.image })} onClick={() => { this.selectStyle(style.image); }}>
-                                                        <img className="img-fluid" src={require(`../../images/${this.renderImage(style.image, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
+                                                    <div className={"style-img-container " + classnames({ active: this.props.shirtToEdit.shirtStyle === style.image })} onClick={() => { this.selectStyle(style.image); }}>
+                                                        <img className="img-fluid" src={require(`../../images/${this.renderImage(style.image, this.props.shirtToEdit.shirtColor.name)}.jpg`)} alt="shirt style" />
                                                     </div>
                                                     <div className="style-description">{style.description}</div>
                                                 </Col>
@@ -165,25 +165,25 @@ class Design extends Component {
                                     </Container>
                                 </TabPane>
                                 <TabPane tabId="2">
-                                    <ColorPicker selectColor={this.selectColor} attribute={'shirt'} selectedColor={this.props.shirtDesign.selectedShirtColor} title={'Choose a shirt colour'} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'shirt'} selectedColor={this.props.shirtToEdit.shirtColor} title={'Choose a shirt colour'} />
                                 </TabPane>
                                 <TabPane tabId="3">
-                                    <Graphic selectedGraphic={this.props.shirtDesign.selectedGraphic} selectGraphic={this.selectGraphic} />
+                                    <Graphic selectedGraphic={this.props.shirtToEdit.graphic} selectGraphic={this.selectGraphic} />
                                     <hr />
-                                    <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.props.shirtDesign.selectedGraphicColor} title={'Change graphic colour'} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.props.shirtToEdit.graphicColor} title={'Change graphic colour'} />
                                 </TabPane>
                                 <TabPane tabId="4">
-                                    <Text text={this.props.shirtDesign.shirtText} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
-                                    <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.props.shirtDesign.selectedTextColor} title={'Change text colour'} />
+                                    <Text text={this.props.shirtToEdit.text} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
+                                    <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.props.shirtToEdit.textColor} title={'Change text colour'} />
                                 </TabPane>
                             </TabContent>
                         </Card>
                     </Col>
                     <Col className="style-config-col">
                         <Card className="img-configurator" id="imageRef">
-                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtDesign.selectedStyle, this.props.shirtDesign.selectedShirtColor)}.jpg`)} alt="shirt style" />
-                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtDesign.selectedGraphic ? require(`../../images/${this.props.shirtDesign.selectedGraphic}`) : ''} alt="shirt graphic" />
-                            <div ref="text" className="shirt-text" style={{ color: this.props.shirtDesign.selectedTextColor, fontFamily: this.props.shirtDesign.fontStyle }}>{this.props.shirtDesign.shirtText}</div>
+                            <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtToEdit.shirtStyle, this.props.shirtToEdit.shirtColor.name)}.jpg`)} alt="shirt style" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtToEdit.graphic ? require(`../../images/${this.props.shirtToEdit.graphic}`) : ''} alt="shirt graphic" />
+                            <div ref="text" className="shirt-text" style={{ color: this.props.shirtToEdit.textColor.color, fontFamily: this.props.shirtToEdit.font }}>{this.props.shirtToEdit.text}</div>
                         </Card>
                     </Col>
                 </Row>

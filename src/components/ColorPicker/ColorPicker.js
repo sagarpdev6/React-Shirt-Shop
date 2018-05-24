@@ -9,7 +9,7 @@ class ColorPicker extends Component {
         super();
 
         this.state = {
-            colors: [{ name: 'White', backgroundColor: '#FFFFFF' }, { name: 'Grey', backgroundColor: '#CDCDCD' }, { name: 'Black', backgroundColor: '#444444' }, { name: 'Blue', backgroundColor: '#2674A8' }, { name: 'Green', backgroundColor: '#44A265' }, { name: 'Yellow', backgroundColor: '#F4DA70' }, { name: 'Purple', backgroundColor: '#6E5BD6' }, { name: 'Red', backgroundColor: '#A7386B' }]
+            colors: [{ name: 'White', color: '#FFFFFF' }, { name: 'Grey', color: '#CDCDCD' }, { name: 'Black', color: '#444444' }, { name: 'Blue', color: '#2674A8' }, { name: 'Green', color: '#44A265' }, { name: 'Yellow', color: '#F4DA70' }, { name: 'Purple', color: '#6E5BD6' }, { name: 'Red', color: '#A7386B' }]
         }
         this.selectColor = this.selectColor.bind(this);
     }
@@ -26,7 +26,7 @@ class ColorPicker extends Component {
                 <Row className="color-picker-row">
                     {this.state.colors.map((color, index) => (
                         <div key={index} >
-                            <div className={"color-div " + classnames({ active: this.props.selectedColor === color.name })} onClick={() => { this.selectColor(color); }} style={color}>
+                            <div className={"color-div " + classnames({ active: this.props.selectedColor.name.toLowerCase() === color.name.toLowerCase() })} onClick={() => { this.selectColor(color); }} style={{ backgroundColor: color.color }}>
                             </div>
                             <div className="color-name">{color.name}</div>
                         </div>

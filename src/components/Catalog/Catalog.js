@@ -37,7 +37,6 @@ class Catalog extends Component {
         this.selectGraphic = this.selectGraphic.bind(this);
         this.addShirtText = this.addShirtText.bind(this);
         this.changeTextFont = this.changeTextFont.bind(this);
-        this.saveDesign = this.saveDesign.bind(this);
 
         this.state = {
             activeTab: '1',
@@ -211,13 +210,6 @@ class Catalog extends Component {
         });
     }
 
-    saveDesign = () => {
-        this.setState({
-            openDesign: false,
-            action: ''
-        });
-    }
-
     setShirtTitle = (event) => {
         let shirt = this.state.shirtToEdit;
         shirt.name = event.target.value;
@@ -226,7 +218,8 @@ class Catalog extends Component {
         });
     }
 
-    saveShirtDesign = (newShirt) => {
+    saveShirtDesign = () => {
+        let newShirt = this.state.shirtToEdit;
         console.log('Shirt Save');
 
         let list = this.state.shirtList;
@@ -240,7 +233,7 @@ class Catalog extends Component {
             list[newShirt.id - 1] = newShirt;
         }
 
-        let blank = {
+        let blankShirt = {
             name: 'untitled_design',
             price: 18.99,
             quantity: 0,
@@ -255,9 +248,11 @@ class Catalog extends Component {
         };
 
         this.setState({
+            openDesign: false,
             shirtList: list,
             action: '',
-            shirtToEdit: blank
+            // Reset to a blank shirt
+            shirtToEdit: blankShirt
         });
     }
 
@@ -303,7 +298,7 @@ class Catalog extends Component {
 
     changeTextFont = (font) => {
         let shirt = this.state.shirtToEdit;
-        shirt.textStyle = font;
+        shirt.font = font;
         this.setState({ shirtToEdit: shirt });
     }
 
@@ -331,7 +326,7 @@ class Catalog extends Component {
                         {this.state.openDesign ?
                             <div>
                                 <input className="input-shirt-title" type="text" value={this.state.shirtToEdit.name} onChange={this.setShirtTitle} />
-                                <button className="primary-btn nav-btn" onClick={() => { this.saveDesign(); }}>SAVE DESIGN</button>
+                                <button className="primary-btn nav-btn" onClick={() => { this.saveShirtDesign(); }}>SAVE DESIGN</button>
                             </div> :
                             <button className="primary-btn nav-btn" onClick={() => { this.newShirtDesign(); }}>NEW DESIGN</button>}
 

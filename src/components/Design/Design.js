@@ -30,8 +30,8 @@ class Design extends Component {
     }
 
     componentDidMount() {
-        if (this.props.shirtToEdit) {
-            // this.refs.graphicImage.style.display = "block";
+        if (this.props.shirtToEdit.image) {
+            this.refs.graphicImage.style.display = "block";
             // this.makeDraggable(this.refs.text);
             // this.makeDraggable(this.refs.graphicImage);
         }
@@ -114,11 +114,6 @@ class Design extends Component {
         return colorArr[1];
     }
 
-    componentWillUnmount() {
-        // let element = document.getElementById('imageRef');
-        this.props.saveShirtDesign(this.props.shirtToEdit);
-    }
-
     render() {
         return (
             <Container fluid className="design-container">
@@ -173,7 +168,7 @@ class Design extends Component {
                                     <ColorPicker selectColor={this.selectColor} attribute={'graphic'} selectedColor={this.props.shirtToEdit.graphicColor} title={'Change graphic colour'} />
                                 </TabPane>
                                 <TabPane tabId="4">
-                                    <Text text={this.props.shirtToEdit.text} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
+                                    <Text text={this.props.shirtToEdit.text} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} font={this.props.shirtToEdit.font} />
                                     <ColorPicker selectColor={this.selectColor} attribute={'text'} selectedColor={this.props.shirtToEdit.textColor} title={'Change text colour'} />
                                 </TabPane>
                             </TabContent>
@@ -182,7 +177,7 @@ class Design extends Component {
                     <Col className="style-config-col">
                         <Card className="img-configurator" id="imageRef">
                             <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtToEdit.shirtStyle, this.props.shirtToEdit.shirtColor.name)}.jpg`)} alt="shirt style" />
-                            <img ref="graphicImage" className="img-fluid graphic-img" src={this.props.shirtToEdit.graphic ? require(`../../images/${this.props.shirtToEdit.graphic}`) : ''} alt="shirt graphic" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: "none" }} src={this.props.shirtToEdit.graphic ? require(`../../images/${this.props.shirtToEdit.graphic}`) : ''} alt="shirt graphic" />
                             <div ref="text" className="shirt-text" style={{ color: this.props.shirtToEdit.textColor.color, fontFamily: this.props.shirtToEdit.font }}>{this.props.shirtToEdit.text}</div>
                         </Card>
                     </Col>

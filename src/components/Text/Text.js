@@ -48,7 +48,7 @@ export default class Text extends Component {
                 <div className="form-group">
                     <label htmlFor="pwd" className="text-lbl">Change font</label>
                     <br />
-                    <select className="form-control form-control-sm" onChange={this.changeTextFont}>
+                    <select className="form-control form-control-sm" onChange={this.changeTextFont} value={this.props.font}>
                         <option value="">Select</option>
                         {this.state.fonts.map((font, index) => (
                             <option key={index} value={font.font}>{font.name}</option>

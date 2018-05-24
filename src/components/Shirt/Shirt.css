@@ -46,14 +46,22 @@
     cursor: pointer; 
 }
 
-.shirt-graphic-img {
-    width: 180px;
+
+.shirt-graphic-img, .shirt-text-final {
     position: absolute;
 }
 
+.shirt-graphic-img {
+    left: 27%;
+    top: 12%;
+    width: 180px;
+    
+}
+
 .shirt-text-final {
-    position: absolute;
-    font-size: 35px;
+    left: 27%;
+    top: 38%;
+    font-size: 25px;
     text-align: center;
     max-width: 180px;
 }

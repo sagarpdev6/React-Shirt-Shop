@@ -94,11 +94,21 @@
 
 .graphic-img, .shirt-text {
     position: absolute;
-    width: 250px;
+}
+
+.graphic-img {
+    left: 27%;
+    top: 8%;
+    width: 310px;
 }
 
 .shirt-text {
-    font-size: 60px;
+    width: 220px;
+    left: 32%;
+    top: 48%;
+    font-size: 45px;
     text-align: center;
 }
+
+
 

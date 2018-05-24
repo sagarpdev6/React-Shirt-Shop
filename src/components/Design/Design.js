@@ -57,14 +57,14 @@ class Design extends Component {
         // Show Image
         this.refs.graphicImage.style.display = "block";
         // Make Image draggable
-        let element = this.makeDraggable(this.refs.graphicImage);
-        this.props.selectGraphic(graphic, element);
+        // let element = this.makeDraggable(this.refs.graphicImage);
+        this.props.selectGraphic(graphic);
     }
 
     addShirtText = (text) => {
         // Make Text draggable
-        let element = this.makeDraggable(this.refs.text);
-        this.props.addShirtText(text, element);
+        // let element = this.makeDraggable(this.refs.text);
+        this.props.addShirtText(text);
     }
 
     changeTextFont = (event) => {
@@ -182,7 +182,7 @@ class Design extends Component {
                     <Col className="style-config-col">
                         <Card className="img-configurator" id="imageRef">
                             <img className="img-fluid" src={require(`../../images/${this.renderImage(this.props.shirtToEdit.shirtStyle, this.props.shirtToEdit.shirtColor.name)}.jpg`)} alt="shirt style" />
-                            <img ref="graphicImage" className="img-fluid graphic-img" style={{ display: 'none' }} src={this.props.shirtToEdit.graphic ? require(`../../images/${this.props.shirtToEdit.graphic}`) : ''} alt="shirt graphic" />
+                            <img ref="graphicImage" className="img-fluid graphic-img" src={this.props.shirtToEdit.graphic ? require(`../../images/${this.props.shirtToEdit.graphic}`) : ''} alt="shirt graphic" />
                             <div ref="text" className="shirt-text" style={{ color: this.props.shirtToEdit.textColor.color, fontFamily: this.props.shirtToEdit.font }}>{this.props.shirtToEdit.text}</div>
                         </Card>
                     </Col>

@@ -230,12 +230,6 @@ class Catalog extends Component {
         });
     }
 
-    setShirtTitle = (event) => {
-        this.setState({
-            newTitle: event.target.value
-        });
-    }
-
     saveShirtDesign = (shirt) => {
         console.log('Shirt Save');
         let list = this.state.shirtList;

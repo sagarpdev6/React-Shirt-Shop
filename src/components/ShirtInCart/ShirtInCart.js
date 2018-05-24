@@ -3,8 +3,6 @@ import './ShirtInCart.css';
 
 import { Row, Col } from 'reactstrap';
 
-// const ShirtInCartImg = require('../../images/MensShirtDesigns-1.jpg');
-
 class ShirtInCart extends Component {
 
     constructor(props) {
@@ -44,9 +42,9 @@ class ShirtInCart extends Component {
             <Row className="shirt-in-cart-container">
                 <Col xs="4">
                     {this.props.shirt.graphic ?
-                        <img ref="graphicImage" className="img-fluid cart-shirt-graphic-img" style={{ left: this.reCalculate(this.props.shirt.textElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.textElementPosition.top, 'top') }} src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}.jpg`) : ''} alt="shirt graphic" /> : null}
+                        <img ref="graphicImage" className="img-fluid cart-shirt-graphic-img" src={this.props.shirt.graphic ? require(`../../images/${this.props.shirt.graphic}`) : ''} alt="shirt graphic" /> : null}
                     {this.props.shirt.text ?
-                        <div ref="text" className="cart-shirt-text-final" style={{ color: this.props.shirt.textColor, fontFamily: this.props.shirt.font, left: this.reCalculate(this.props.shirt.graphicElementPosition.left, 'left'), top: this.reCalculate(this.props.shirt.graphicElementPosition.top, 'top') }}>{this.props.shirt.text}</div> : null}
+                        <div ref="text" className="cart-shirt-text-final" style={{ color: this.props.shirt.textColor.color, fontFamily: this.props.shirt.font }}>{this.props.shirt.text}</div> : null}
                     <img className="img-fluid shirt-in-cart-img" src={require(`../../images/${this.props.shirt.image}.jpg`)} alt="shirt in cart" />
                 </Col>
                 <Col xs="7" className="shirt-in-cart-middle">

@@ -72,13 +72,19 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 10px;
 }
 
-.cart-shirt-graphic-img {
-    width: 40px;
+.cart-shirt-graphic-img, .cart-shirt-text-final {
     position: absolute;
+}
+.cart-shirt-graphic-img {
+    left: 36%;
+    top: 16%;
+    width: 32px;
 }
 
 .cart-shirt-text-final {
-    position: absolute;
-    font-size: 10px;
+    left: 41%;
+    top: 41%;
+    font-size: 5px;
     text-align: center;
+    width: 20px;
 }

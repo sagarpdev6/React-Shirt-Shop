@@ -33,6 +33,7 @@
     float: right;
     font-weight: 700;
     margin-bottom: 30px;
+    min-width: 157px;
 }
 
 span {

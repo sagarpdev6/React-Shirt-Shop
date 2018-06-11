@@ -341,7 +341,9 @@ class Catalog extends Component {
                 </Navbar>
                 <div>
                     <div className="overlay" ref="overlay"></div>
-                    {this.state.openDesign ? <Design action={this.state.action} shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} /> : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} editShirt={this.editShirt} />}
+                    {this.state.openDesign ?
+                        <Design action={this.state.action} shirtToEdit={this.state.shirtToEdit} saveShirtDesign={this.saveShirtDesign} selectStyle={this.selectStyle} selectColor={this.selectColor} selectGraphic={this.selectGraphic} addShirtText={this.addShirtText} changeTextFont={this.changeTextFont} />
+                        : <CatalogTabs shirtList={this.state.shirtList} addToCart={this.addToCart} editShirt={this.editShirt} />}
                 </div>
             </div>
         );

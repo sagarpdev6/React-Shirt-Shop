@@ -1,3 +1,4 @@
+/* Navbar css */
 nav {
     background-color: #FFFFFF;
     height: 80px;
@@ -66,7 +67,7 @@ nav {
     margin-top: 5px;
 }
 
-/* Side nav Cart */
+/* Side nav components */
 .sidenav-cart, .sidenav-shipping, .sidenav-payment, .sidenav-confirmation {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
@@ -122,33 +123,4 @@ div.disabled {
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
     transition: 0.2s;
-}
-
-@media only screen and (min-width: 500px) {
-    .fluid-container {
-        padding-left: 100px !important;
-    }
-}
-
-/* Sidenav media queries */
-@media only screen and (min-width: 500px) {
-    .sidenav-cart, .sidenav-shipping, .sidenav-payment {
-        max-width: 385px;
-    }
-
-    .sidenav-confirmation {
-        max-width: 600px;
-    }
-}
-
-@media only screen and (min-width: 1100px) {
-    .sidenav-confirmation {
-        max-width: 800px;
-    }
-}
-
-@media only screen and (min-width: 1500px) {
-    .sidenav-confirmation {
-        max-width: 1200px;
-    }
 }
